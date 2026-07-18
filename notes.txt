@@ -1,0 +1,128 @@
+GITHUB CLI TOOL - PLANNING NOTES
+==================================
+
+CORE LIBRARIES
+--------------
+asyncio  - lets you run multiple I/O operations (HTTP requests) concurrently
+           instead of sequentially. Use asyncio.gather() to fire off repo info,
+           commits, and PR requests all at once.
+
+httpx    - HTTP client, supports both sync and async. Use httpx.AsyncClient()
+           as an async context manager to reuse connections across requests.
+
+pydantic - defines data models with type hints, validates and parses JSON
+           responses into typed Python objects (e.g. auto-converts date
+           strings into datetime objects, raises clear errors on bad data).
+
+
+API APPROACH
+------------
+Use raw REST calls via httpx, hitting GitHub's REST API directly.
+
+Base URL: https://api.github.com
+
+Key endpoints:
+  GET /repos/{owner}/{repo}                 -> repo metadata
+  GET /repos/{owner}/{repo}/commits         -> commits
+  GET /repos/{owner}/{repo}/pulls           -> pull requests
+  GET /repos/{owner}/{repo}/issues          -> issues (PRs also appear here)
+
+Docs: https://docs.github.com/en/rest
+
+Alternatives considered:
+  - PyGithub: full SDK, easier but sync-only, less control
+  - GraphQL API: fewer round trips, steeper learning curve
+    (https://docs.github.com/en/graphql)
+
+Note: GET https://api.github.com/ returns a discovery doc of top-level
+URI templates (users, search, gists, orgs, etc.) - it does NOT list
+sub-resources like commits/pulls for a specific repo. Not needed for
+this tool; just hardcode the endpoint paths above.
+
+
+AUTHENTICATION
+---------------
+GitHub Personal Access Token (PAT), sent as:
+  Authorization: Bearer <token>
+
+Without a token: 60 requests/hour, public repos only.
+With a token:    5,000 requests/hour, plus private repo access per scope.
+
+For a read-only repo-info tool, only need read access to:
+  Contents, Metadata, Pull requests, Issues
+
+Generate at:
+  Fine-grained (recommended): https://github.com/settings/personal-access-tokens
+  Classic:                    https://github.com/settings/tokens
+
+Also worth sending a pinned API version header so behavior doesn't
+shift under you later:
+  X-GitHub-Api-Version: 2022-11-28
+(This is a constant in code, not user config.)
+
+
+CONFIG FILE LAYOUT
+-------------------
+Keep the token OUT of the config file. Everything else can live there.
+
+GITHUB_TOKEN=<token>          # env var only, never in the config file
+default_owner = "yourname"    # optional
+default_pr_state = "open"     # optional
+per_page = 10                 # optional
+api_base_url = "https://api.github.com"   # only matters for GHE users
+
+What each does:
+
+  GITHUB_TOKEN
+    Sent as the Authorization header on every request. Kept out of the
+    config file so it can't leak via a committed file. Env var takes
+    priority over any file-based value if you ever add a fallback.
+
+  default_owner
+    Fallback owner so the user can type just "reponame" instead of
+    "owner/reponame" every time. Only affects which URL gets built -
+    no effect on the API call itself.
+
+  default_pr_state
+    Default value for the `state` query param on the pulls endpoint
+    (open / closed / all) when the user doesn't pass --pr-state.
+
+  per_page
+    Default value for the `per_page` query param on list endpoints
+    (commits, pulls, issues). Max allowed by GitHub is 100; beyond
+    that requires pagination via the `page` param or the `Link` header.
+
+  api_base_url
+    Only relevant for GitHub Enterprise Server users, whose API lives
+    at a different host (e.g. https://github.mycompany.com/api/v3)
+    instead of https://api.github.com. Defaults to the public API for
+    everyone else.
+
+
+CONFIG FORMAT OPTIONS
+-----------------------
+.env file (+ python-dotenv)  - simplest, pairs with env-var-first design
+TOML (tomllib, stdlib 3.11+) - good for structured preferences, no dependency
+YAML (PyYAML)                - more common in devops tooling than CLIs
+
+Suggested split: .env for the token, small TOML file for preferences.
+
+
+LOAD ORDER (later overrides earlier)
+--------------------------------------
+1. Built-in defaults
+2. Config file
+3. Environment variables
+4. CLI flags
+
+GITHUB_TOKEN should always come from the environment regardless of
+what else is in the config file.
+
+
+TOKEN STORAGE, RANKED BY SAFETY
+----------------------------------
+1. Environment variable (GITHUB_TOKEN)     - standard, what `gh` CLI uses
+2. OS keychain / credential manager        - most secure, more setup (keyring lib)
+3. Config file                             - convenient but riskiest; keep
+                                              outside any git repo, gitignore
+                                              if ever nearby
