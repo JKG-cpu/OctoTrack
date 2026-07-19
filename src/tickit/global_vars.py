@@ -10,6 +10,10 @@ __all__ = ["CHECKMARK", "Text"]
 CHECKMARK = "✓"
 
 
+# Consts
+TOKEN_NAME = "GITHUB_TOKEN"
+
+
 # Custom Text Output
 _console: Console = Console()
 _console.style = "bold white"
@@ -17,8 +21,13 @@ _console.style = "bold white"
 
 class Text:
     @staticmethod
-    def text(text: str, style: str) -> None:
-        _console.print(f"[{style}]{text}[/{style}]")
+    def text(text: str, style: str, end="\n") -> None:
+        _console.print(f"[{style}]{text}[/{style}]", end=end)
+
+    @staticmethod
+    def get_input(text: str, style: str, ending: str = " > ") -> str:
+        _console.print(f"[{style}]{text}[/{style}]", end=ending)
+        return input()
 
     @staticmethod
     def success(text: str) -> None:

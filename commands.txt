@@ -1,0 +1,20 @@
+Name: tickit
+
+--- Setup ---
+tickit setup: Sets up the files and folders
+tickit setup --validate: Validates the files and folders
+tickit setup --remove: Removes data files and folders
+
+--- Config ---
+tickit config: Sets up the config
+tickit config --show: Shows current config settings
+tickit config edit --args: Edits a specific arg
+
+-------------
+ Config Args
+-------------
+GITHUB_TOKEN: Seperately Set with getpass
+default_owner: The default repo owner
+default_pr_state: State for grabbing pull requests (open / closed / all)
+api_base_url: Just for companies
+    | https://api.github.com -> https://github.mycompany.com/api/v3

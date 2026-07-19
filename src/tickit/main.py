@@ -1,4 +1,7 @@
 from .bundler import app
 
-def main() -> None:
+__all__ = ["main"]
+
+
+def main():
     app()

@@ -121,8 +121,6 @@ what else is in the config file.
 
 TOKEN STORAGE, RANKED BY SAFETY
 ----------------------------------
-1. Environment variable (GITHUB_TOKEN)     - standard, what `gh` CLI uses
-2. OS keychain / credential manager        - most secure, more setup (keyring lib)
-3. Config file                             - convenient but riskiest; keep
-                                              outside any git repo, gitignore
-                                              if ever nearby
+1. Environment variable (GITHUB_TOKEN)     
+
+Use os.environ.get("...")
