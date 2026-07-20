@@ -1,0 +1,224 @@
+TICKIT — THINGS THAT HAPPEN IN/TO A GITHUB REPO (via GitHub REST API)
+=======================================================================
+Base URL: https://api.github.com
+Most endpoints below are under: /repos/{owner}/{repo}/...
+Auth: unauthenticated = 60 req/hr, authenticated (PAT) = 5,000 req/hr
+
+-----------------------------------------------------------------------
+1. REPOSITORY METADATA
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}
+    General repo info: description, default branch, visibility, size,
+    stars/forks/watchers counts, license, topics, homepage, archived
+    status, created_at, updated_at, pushed_at
+- GET /repos/{owner}/{repo}/languages
+    Breakdown of languages used (bytes per language)
+- GET /repos/{owner}/{repo}/topics
+    Repo topics/tags
+- GET /repos/{owner}/{repo}/contents/{path}
+    File/directory contents at a given ref
+- GET /repos/{owner}/{repo}/readme
+    README contents
+- GET /repos/{owner}/{repo}/license
+    License info
+
+-----------------------------------------------------------------------
+2. COMMITS
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}/commits
+    List commits (filter by sha, path, author, since, until)
+- GET /repos/{owner}/{repo}/commits/{sha}
+    Single commit detail (files changed, stats, parents)
+- GET /repos/{owner}/{repo}/commits/{sha}/comments
+    Comments on a commit
+- GET /repos/{owner}/{repo}/compare/{base}...{head}
+    Diff/comparison between two refs
+- GET /repos/{owner}/{repo}/stats/commit_activity
+    Weekly commit count for the last year
+- GET /repos/{owner}/{repo}/stats/contributors
+    Per-contributor commit stats (additions/deletions/weeks)
+- GET /repos/{owner}/{repo}/stats/participation
+    Weekly commit counts, owner vs all
+- GET /repos/{owner}/{repo}/stats/punch_card
+    Commit frequency by hour/day of week
+
+-----------------------------------------------------------------------
+3. BRANCHES & TAGS
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}/branches
+    List branches
+- GET /repos/{owner}/{repo}/branches/{branch}
+    Branch detail + protection status
+- GET /repos/{owner}/{repo}/branches/{branch}/protection
+    Branch protection rules
+- GET /repos/{owner}/{repo}/tags
+    List tags
+- GET /git/refs (via /repos/{owner}/{repo}/git/refs)
+    Raw git refs (branches + tags as refs)
+
+-----------------------------------------------------------------------
+4. RELEASES
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}/releases
+    List releases (published)
+- GET /repos/{owner}/{repo}/releases/latest
+    Latest release
+- GET /repos/{owner}/{repo}/releases/{release_id}
+    Single release detail
+- GET /repos/{owner}/{repo}/releases/tags/{tag}
+    Release by tag name
+- GET /repos/{owner}/{repo}/releases/{release_id}/assets
+    Downloadable assets attached to a release
+
+-----------------------------------------------------------------------
+5. ISSUES
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}/issues
+    List issues (state, labels, assignee, milestone filters).
+    Note: this endpoint also returns pull requests unless filtered.
+- GET /repos/{owner}/{repo}/issues/{issue_number}
+    Single issue detail
+- GET /repos/{owner}/{repo}/issues/{issue_number}/comments
+    Comments on an issue
+- GET /repos/{owner}/{repo}/issues/{issue_number}/events
+    Timeline events (labeled, assigned, closed, reopened, etc.)
+- GET /repos/{owner}/{repo}/issues/{issue_number}/timeline
+    Full detailed timeline (cross-references, commits, etc.)
+- GET /repos/{owner}/{repo}/labels
+    All labels defined on the repo
+- GET /repos/{owner}/{repo}/milestones
+    Milestones
+
+-----------------------------------------------------------------------
+6. PULL REQUESTS
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}/pulls
+    List pull requests (state, base, head filters)
+- GET /repos/{owner}/{repo}/pulls/{pull_number}
+    Single PR detail (mergeable status, diff/patch links)
+- GET /repos/{owner}/{repo}/pulls/{pull_number}/commits
+    Commits included in a PR
+- GET /repos/{owner}/{repo}/pulls/{pull_number}/files
+    Files changed in a PR
+- GET /repos/{owner}/{repo}/pulls/{pull_number}/reviews
+    Reviews (approved, changes requested, commented)
+- GET /repos/{owner}/{repo}/pulls/{pull_number}/comments
+    Review (inline code) comments
+- GET /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers
+    Who's been requested to review
+- GET /repos/{owner}/{repo}/pulls/{pull_number}/merge
+    Check if PR has been merged
+
+-----------------------------------------------------------------------
+7. CONTRIBUTORS, COLLABORATORS, TEAMS
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}/contributors
+    List of contributors ranked by commit count
+- GET /repos/{owner}/{repo}/collaborators
+    People with push access
+- GET /repos/{owner}/{repo}/teams
+    Teams with access (org repos only)
+
+-----------------------------------------------------------------------
+8. STARS, WATCHERS, FORKS
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}/stargazers
+    Users who starred the repo (supports starred_at timestamps
+    with Accept: application/vnd.github.star+json)
+- GET /repos/{owner}/{repo}/subscribers
+    Users watching the repo
+- GET /repos/{owner}/{repo}/forks
+    List of forks
+
+-----------------------------------------------------------------------
+9. REPO EVENTS / ACTIVITY FEED
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}/events
+    Raw chronological event feed for the repo (pushes, PRs opened,
+    issues opened, stars, forks, etc.) — this is the closest thing
+    to a single "everything that happened" endpoint
+- GET /networks/{owner}/{repo}/events
+    Events across the fork network
+- GET /repos/{owner}/{repo}/activity
+    Recent push/branch/tag activity (new endpoint, replaces some
+    of the old events use cases)
+
+-----------------------------------------------------------------------
+10. GITHUB ACTIONS (CI/CD)
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}/actions/workflows
+    Workflow definitions
+- GET /repos/{owner}/{repo}/actions/runs
+    Workflow run history (status, conclusion, duration)
+- GET /repos/{owner}/{repo}/actions/runs/{run_id}/jobs
+    Jobs within a run
+- GET /repos/{owner}/{repo}/actions/artifacts
+    Build artifacts produced by workflows
+- GET /repos/{owner}/{repo}/actions/secrets
+    Secret names (values never exposed)
+
+-----------------------------------------------------------------------
+11. DEPLOYMENTS & ENVIRONMENTS
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}/deployments
+    Deployment history
+- GET /repos/{owner}/{repo}/deployments/{deployment_id}/statuses
+    Status updates for a deployment (pending, success, failure)
+- GET /repos/{owner}/{repo}/environments
+    Configured environments (staging, production, etc.)
+
+-----------------------------------------------------------------------
+12. TRAFFIC / INSIGHTS (requires push access)
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}/traffic/views
+    Page views over last 14 days
+- GET /repos/{owner}/{repo}/traffic/clones
+    Clone counts over last 14 days
+- GET /repos/{owner}/{repo}/traffic/popular/referrers
+    Top referring sites
+- GET /repos/{owner}/{repo}/traffic/popular/paths
+    Most visited paths in the repo
+
+-----------------------------------------------------------------------
+13. SECURITY
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}/dependabot/alerts
+    Dependabot vulnerability alerts
+- GET /repos/{owner}/{repo}/code-scanning/alerts
+    Code scanning (CodeQL etc.) alerts
+- GET /repos/{owner}/{repo}/secret-scanning/alerts
+    Leaked secret alerts
+- GET /repos/{owner}/{repo}/vulnerability-alerts
+    Whether vulnerability alerts are enabled
+
+-----------------------------------------------------------------------
+14. DISCUSSIONS (if enabled)
+-----------------------------------------------------------------------
+- GraphQL only for full discussion data (REST support is limited)
+    Categories, discussion threads, comments, upvotes
+
+-----------------------------------------------------------------------
+15. WEBHOOKS
+-----------------------------------------------------------------------
+- GET /repos/{owner}/{repo}/hooks
+    Configured webhooks (requires admin access)
+- Webhooks (push-based, not pulled) can notify your app in real time
+  for: push, pull_request, issues, issue_comment, release,
+  star, fork, watch, workflow_run, deployment_status, etc.
+  Useful later if Tickit evolves from polling to listening.
+
+-----------------------------------------------------------------------
+16. RATE LIMIT
+-----------------------------------------------------------------------
+- GET /rate_limit
+    Your current API rate limit status — worth checking before
+    firing off concurrent async requests
+
+=======================================================================
+NOTE: Most "list" endpoints above support pagination (?page= and
+?per_page=, max 100/page) and many support conditional requests via
+ETag/If-None-Match headers, which don't count against your rate limit
+if the data hasn't changed. Both are worth building into the async
+client early since Tickit will be hammering these endpoints
+concurrently.
+=======================================================================
