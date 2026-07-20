@@ -5,13 +5,14 @@ from getpass import getpass
 from dotenv import load_dotenv
 
 from ..global_vars import Text, TOKEN_NAME
-from ..paths import ENV_PATH
+from ..paths import ENV_PATH, load_config
 from .flags import GitHubTokenStatus
 
 __all__ = [
     "ConfigKey",
     "edit_github_token",
     "edit_config",
+    "show_config",
     "load_github_token",
 ]
 
@@ -55,5 +56,25 @@ def edit_github_token() -> None:
 # endregion
 
 
+# GitHub Config
+# region
 def edit_config(key: ConfigKey, value: str) -> None:
-    pass
+    with Text.status(f"Changing '{key}' in config..."):
+        config_settings = load_config()
+        config_settings[key] = value
+
+    Text.success(f"Changed '{key}' to {value}")
+
+
+def show_config() -> None:
+    config_settings = load_config()
+
+    Text.text("--- Config Settings ---", style="bold cyan")
+
+    for name, value in config_settings.items():
+        Text.text(f"{name}: {value}", style="bold white")
+
+    print()
+
+
+# endregion

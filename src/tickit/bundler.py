@@ -1,6 +1,6 @@
 import typer
 
-from .core import stp, val, rm, ConfigKey, edit_config, edit_github_token
+from .core import stp, val, rm, ConfigKey, edit_config, edit_github_token, show_config
 
 app = typer.Typer()
 
@@ -47,7 +47,7 @@ def config_main(
     ),
 ) -> None:
     if show:
-        print("Show Config")
+        show_config()
 
     elif change_token:
         edit_github_token()

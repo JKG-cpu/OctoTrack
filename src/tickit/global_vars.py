@@ -12,6 +12,11 @@ CHECKMARK = "✓"
 
 # Consts
 TOKEN_NAME = "GITHUB_TOKEN"
+CONFIG_SETTINGS = {
+    "default_owner": None,
+    "default_pr_state": "open",
+    "api_base_url": "https://api.github.com"
+}
 
 
 # Custom Text Output

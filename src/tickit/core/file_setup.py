@@ -41,9 +41,11 @@ def validate() -> None:
             Text.success("All files and directories are present.")
             if token_status == GitHubTokenStatus.TOKEN_SET:
                 Text.success("GitHub token is set.")
-            
+
             elif token_status == GitHubTokenStatus.TOKEN_NOT_SET:
-                Text.info("GitHub token is not set. Please run 'ghtickit config --set-token'")
+                Text.info(
+                    "GitHub token is not set. Please run 'ghtickit config --set-token'"
+                )
 
     except Exception as e:
         Text.error(f"Error checking up files and directories: {e}")
