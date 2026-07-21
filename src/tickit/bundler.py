@@ -1,9 +1,10 @@
 import typer
 
 from .core import stp, val, rm, ConfigKey, edit_config, edit_github_token, show_config
+from .commands import client_app
 
 app = typer.Typer()
-
+app.add_typer(client_app, name = "client")
 
 # Setup Commands
 # region

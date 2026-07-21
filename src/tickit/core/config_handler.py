@@ -4,8 +4,7 @@ from enum import Enum
 from getpass import getpass
 from dotenv import load_dotenv
 
-from ..global_vars import Text, TOKEN_NAME
-from ..paths import ENV_PATH, load_config
+from ..utils import Text, TOKEN_NAME, ENV_PATH, load_config, save_config
 from .flags import GitHubTokenStatus
 
 __all__ = [
@@ -59,11 +58,12 @@ def edit_github_token() -> None:
 # GitHub Config
 # region
 def edit_config(key: ConfigKey, value: str) -> None:
-    with Text.status(f"Changing '{key}' in config..."):
+    with Text.status(f"Changing '{key}' in config...", style="bold cyan"):
         config_settings = load_config()
         config_settings[key] = value
+        save_config(config_settings)
 
-    Text.success(f"Changed '{key}' to {value}")
+    Text.success("Change successful")
 
 
 def show_config() -> None:

@@ -5,13 +5,22 @@ from shutil import rmtree
 
 from .global_vars import CONFIG_SETTINGS, Text
 
-__all__ = ["DATA_DIR", "setup_paths", "validate_paths", "remove_paths", "load_config"]
+__all__ = [
+    "CONFIG_DIR",
+    "DATA_DIR",
+    "ENV_PATH",
+    "CONFIG_SETTINGS_PATH",
+    "setup_paths",
+    "validate_paths",
+    "remove_paths",
+    "load_config",
+    "save_config",
+]
 
 APP_NAME = "Tickit"
 APP_AUTHOR = "JKG-cpu"
 
 DATA_DIR = Path(user_data_dir(APP_NAME, APP_AUTHOR))
-
 
 CONFIG_DIR = Path(user_config_dir(APP_NAME, APP_AUTHOR))
 ENV_PATH = CONFIG_DIR / ".env"
@@ -57,7 +66,7 @@ def remove_paths() -> None:
     rmtree(CONFIG_DIR)
 
 
-# Load functions
+# Load / Save functions
 def load_config() -> dict:
     with open(CONFIG_SETTINGS_PATH, "r") as f:
         data = json.load(f)
@@ -69,3 +78,7 @@ def load_config() -> dict:
         exit(1)
 
     return data
+
+def save_config(config: dict) -> None:
+    with open(CONFIG_SETTINGS_PATH, "w") as f:
+        json.dump(config, f)

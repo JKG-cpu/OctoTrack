@@ -1,7 +1,13 @@
 from pathlib import Path
 
-from ..global_vars import Text
-from ..paths import setup_paths, validate_paths, remove_paths, DATA_DIR, CONFIG_DIR
+from ..utils import (
+    Text,
+    setup_paths,
+    validate_paths,
+    remove_paths,
+    DATA_DIR,
+    CONFIG_DIR,
+)
 from .config_handler import load_github_token
 from .flags import GitHubTokenStatus
 

@@ -3,7 +3,7 @@ from rich.progress import Progress
 from rich.status import Status
 
 
-__all__ = ["CHECKMARK", "Text"]
+__all__ = ["CHECKMARK", "TOKEN_NAME", "CONFIG_SETTINGS", "Text"]
 
 
 # ASCII Characters
@@ -15,7 +15,7 @@ TOKEN_NAME = "GITHUB_TOKEN"
 CONFIG_SETTINGS = {
     "default_owner": None,
     "default_pr_state": "open",
-    "api_base_url": "https://api.github.com"
+    "api_base_url": "https://api.github.com",
 }
 
 
@@ -41,6 +41,10 @@ class Text:
     @staticmethod
     def error(text: str) -> None:
         _console.print(f"[bold red]{text}[/bold red]")
+
+    @staticmethod
+    def warning(text: str) -> None:
+        _console.print(f"[bold yellow]{text}[/bold yellow]")
 
     @staticmethod
     def info(text: str) -> None:
