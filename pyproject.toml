@@ -1,5 +1,5 @@
 [project]
-name = "tickit"
+name = "OctoTrack"
 version = "0.1.0"
 description = "An Async CLI Client for GitHub that can be used to track different things on GitHub per repository."
 readme = "README.md"
@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [project.scripts]
-ghtickit = "tickit:main"
+octotrack = "octotrack:main"
 
 [build-system]
 requires = ["uv_build>=0.11.28,<0.12.0"]

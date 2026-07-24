@@ -18,3 +18,6 @@ default_owner: The default repo owner
 default_pr_state: State for grabbing pull requests (open / closed / all)
 api_base_url: Just for companies
     | https://api.github.com -> https://github.mycompany.com/api/v3
+
+--- Client ---
+repo: Get a github repo

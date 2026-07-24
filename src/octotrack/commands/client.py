@@ -1,5 +1,6 @@
 import typer
 import asyncio
+from pprint import pprint
 
 from ..client import GitHubClient
 
@@ -10,7 +11,7 @@ app = typer.Typer()
 async def _repo(user: str | None, repo: str) -> None:
     g = GitHubClient()
     response = await g.get_repo(repo, user)
-    print(response)
+    pprint(response.json())
 #endregion
 
 @app.command()
