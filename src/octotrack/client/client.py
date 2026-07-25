@@ -1,7 +1,7 @@
 import httpx
 import os
 
-from ..utils import load_config, Text, TOKEN_NAME
+from ..utils import load_config, Text, TOKEN_NAME, CLI_NAME
 from ..core import load_github_token, GitHubTokenStatus
 
 
@@ -19,12 +19,12 @@ class GitHubClient:
 
         if status == GitHubTokenStatus.INVALID_PATH:
             Text.error("Not all paths exist... some may have been moved or deleted.")
-            Text.info("Please run 'ghtickit setup' to complete the path setup.")
+            Text.info(f"Please run '{CLI_NAME} setup' to complete the path setup.")
             exit(1)
 
         elif status == GitHubTokenStatus.TOKEN_NOT_SET:
             Text.warning(
-                "[!] GitHub token not set. Run 'ghtickit config --setup-token' to set a GitHub Auth Token."
+                f"[!] GitHub token not set. Run '{CLI_NAME} config --setup-token' to set a GitHub Auth Token."
             )
             exit(1)
 
@@ -49,7 +49,7 @@ class GitHubClient:
         if not user:
             if not self.config["default_owner"]:
                 Text.error(
-                    "You must specify a user OR set a default user with 'ghtickit config edit default_owner OWNERNAME'"
+                    f"You must specify a user OR set a default user with '{CLI_NAME} config edit default_owner OWNERNAME'"
                 )
                 exit(1)
 

@@ -7,6 +7,7 @@ from ..utils import (
     remove_paths,
     DATA_DIR,
     CONFIG_DIR,
+    CLI_NAME
 )
 from .config_handler import load_github_token
 from .flags import GitHubTokenStatus
@@ -36,11 +37,11 @@ def validate() -> None:
 
         if paths:
             Text.error("Not all paths exist... some may have been moved or deleted.")
-            Text.info("Please run 'ghtickit setup' to complete the path setup.")
+            Text.info(f"Please run '{CLI_NAME} setup' to complete the path setup.")
 
         elif token_status == GitHubTokenStatus.INVALID_PATH:
             Text.error(
-                "A path for the config is missing. Please run 'ghtickit setup' to complete the path setup."
+                f"A path for the config is missing. Please run '{CLI_NAME} setup' to complete the path setup."
             )
 
         else:
@@ -50,7 +51,7 @@ def validate() -> None:
 
             elif token_status == GitHubTokenStatus.TOKEN_NOT_SET:
                 Text.info(
-                    "GitHub token is not set. Please run 'ghtickit config --set-token'"
+                    f"GitHub token is not set. Please run '{CLI_NAME} config --set-token'"
                 )
 
     except Exception as e:
@@ -68,7 +69,7 @@ def remove() -> None:
             with Text.status("Removing Files and Directories...", style="bold cyan"):
                 remove_paths()
 
-            Text.success("Removed all files and directories created by ticket.")
+            Text.success(f"Removed all files and directories created by {CLI_NAME}.")
 
         elif confirm.lower().startswith("n"):
             Text.info("Canceled.")

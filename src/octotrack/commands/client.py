@@ -6,13 +6,17 @@ from ..client import GitHubClient
 
 app = typer.Typer()
 
+
 # Async commands
-#region
+# region
 async def _repo(user: str | None, repo: str) -> None:
     g = GitHubClient()
     response = await g.get_repo(repo, user)
     pprint(response.json())
-#endregion
+
+
+# endregion
+
 
 @app.command()
 def repo(

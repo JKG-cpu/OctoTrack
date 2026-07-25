@@ -17,7 +17,7 @@ __all__ = [
     "save_config",
 ]
 
-APP_NAME = "Tickit"
+APP_NAME = "OctoTrack"
 APP_AUTHOR = "JKG-cpu"
 
 DATA_DIR = Path(user_data_dir(APP_NAME, APP_AUTHOR))
@@ -78,6 +78,7 @@ def load_config() -> dict:
         exit(1)
 
     return data
+
 
 def save_config(config: dict) -> None:
     with open(CONFIG_SETTINGS_PATH, "w") as f:

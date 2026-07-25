@@ -4,7 +4,8 @@ from .core import stp, val, rm, ConfigKey, edit_config, edit_github_token, show_
 from .commands import client_app
 
 app = typer.Typer()
-app.add_typer(client_app, name = "client")
+app.add_typer(client_app, name="client")
+
 
 # Setup Commands
 # region
