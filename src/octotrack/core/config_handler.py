@@ -18,6 +18,7 @@ __all__ = [
 
 class ConfigKey(str, Enum):
     default_owner = "default_owner"
+    default_repo = "default_repo"
     default_pr_state = "pr_state"
     api_base_url = "base_url"
 

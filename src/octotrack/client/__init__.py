@@ -1,1 +1,1 @@
-from .client import GitHubClient
+from .repo_metadata import Client as RepoClient

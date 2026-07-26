@@ -1,0 +1,66 @@
+import typer
+import asyncio
+from pprint import pprint
+
+from ..client import RepoClient
+from ..core import ConfigKey, edit_config
+from ..utils import load_config, Text
+
+
+app = typer.Typer()
+
+
+# Helpers
+def _parse_owner_repo(value: str | None, config: dict) -> tuple[str, str]:
+    if value and "/" in value:
+        return tuple(value.split("/", 1))
+
+    owner = config["default_owner"]
+    repo = value or config["default_repo"]
+
+    if not owner:
+        Text.error(
+            "Specify 'owner/repo' OR set a default with 'octotrack repo default <owner/repo>'"
+        )
+        raise typer.Exit(1)
+
+    if not repo:
+        Text.error("Provide a repo, e.g 'octotrack repo info JKG-cpu/OctoTrack'")
+        raise typer.Exit(1)
+
+    return owner, repo
+
+
+# Async Methods
+async def _repo_info(owner: str, repo: str) -> None:
+    client = RepoClient()
+    response = await client.get_repo(repo, owner)
+    pprint(response.json())
+
+
+# Commands
+@app.command()
+def info(
+    owner_repo: str = typer.Argument(
+        None, metavar="OWNER/REPO", help="e.g 'JKG-cpu/OctoTrack'"
+    ),
+) -> None:
+    owner, repo = _parse_owner_repo(owner_repo, load_config())
+    asyncio.run(_repo_info(owner, repo))
+
+
+@app.command()
+def default(
+    owner_repo: str = typer.Argument(
+        ..., metavar="OWNER/REPO", help="Default owner/repo, e.g. 'JKG-cpu/OctoTrack'"
+    ),
+) -> None:
+    owner, repo = (
+        (owner_repo.split("/", 1) + [None])[:2]
+        if "/" in owner_repo
+        else (owner_repo, None)
+    )
+
+    edit_config(ConfigKey.default_owner, owner)
+    if repo:
+        edit_config(ConfigKey.default_repo, repo)

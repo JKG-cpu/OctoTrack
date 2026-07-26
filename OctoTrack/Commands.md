@@ -1,53 +1,62 @@
-To run the module, use `octotrack`.
+> Base command: `octotrack`
+
+## Todos
+- [x] Create all the setup commands
+- [x] Add the functions for the setup commands
+- [x] Create all the config commands
+- [x] Add the functions for the config commands
+- [x] Create all the repository metadata commands
+- [x] Add the functions for the repository metadata commands
+- [ ] Allow clearing / resetting config values
+
 ## Setup
-```bash
-octotrack setup
-```
-> Sets up OctoTrack for first-time use.
 
-```bash
-octotrack setup --validate
-```
-> Checks that your current installation is valid.
+| Command                    | Description                 |
+| -------------------------- | --------------------------- |
+| `octotrack setup`          | First-time setup            |
+| `octotrack setup remove`   | Remove configuration        |
+| `octotrack setup validate` | Check installation is valid |
 
-```bash
-octotrack setup --remove
-```
-> Removes the current OctoTrack configuration.
-
-## Config
-```bash
-octotrack config
-```
-> Sets up OctoTrack's config
-
-```bash
-octotrack config --show
-```
-> Shows OctoTrack's current config setup
-
-```bash
-octotrack config --set-token
-```
-> Set your GitHub token (*needed for the app to work*)
-
-```bash
-octotrack config edit --args
-```
-> Edit a specific argument in the config
-
-OctoTrack config
+## Configuration
+| Command                              | Description                                |
+| ------------------------------------ | ------------------------------------------ |
+| `octotrack config show`              | Show the current config                    |
+| `octotrack config set-token`         | Set the GitHub Token, saved in a .env file |
+| `octotrack config set <key> <value>` | Directly set key / value                   |
+| `octotrack config path`              | Print Config Path                          |
+### Config Settings
 ```json
-{
-	"default_owner": "Repo Owner",
+CONFIG_SETTINGS = {
+	"default_owner": None,
+	"default_repo": None,
 	"default_pr_state": "open" | "closed" | "all",
-	"api_base_url": "https://api.github.com" | "https://github.mycompany.com/api/v3"
+	"api_base_url": "https://api.github.com" | "https://github.mycompany.com/api/v3",
 }
 ```
+## Repository
+### Metadata
+| Command                                       | Description                                       |
+| --------------------------------------------- | ------------------------------------------------- |
+| `octotrack repo default <owner/repo>`         | Set the default repository and / or owner quickly |
+| `octotrack repo info <owner/repo>`            | [^1] General repository information               |
+| `octotrack repo languages <owner/repo>`       | Breakdown of languages used                       |
+| `octotrack repo topics <owner/repo>`          | Repository topics / tags                          |
+| `octotrack repo contents <owner/repo> <path>` | File / directory contents at a given ref          |
+| `octotrack repo readme <owner/repo>`          | Get the repository's README.md                    |
+| `octotrack repo license <owner/repo>`         | Get the repository's LICENSE                      |
 
-For the GitHub token, it will be stored in a .env file within the config directory *(generated via `octotrack setup`)*. 
 
-## Client
-```
-octotrack client repo "Repo Name"
-```
+[^1]: General Repository Info includes
+	-  Description
+	-  Default Branch
+	-  Visibility
+	-  Size
+	-  Stars / forks / watchers counts
+	-  License
+	-  Topics
+	-  Homepage
+	-  Archived
+	-  Status
+	-  Created at
+	-  Updated at
+	-  Pushed at

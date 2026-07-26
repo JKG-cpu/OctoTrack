@@ -73,7 +73,7 @@ def load_config() -> dict:
 
     if not isinstance(data, dict) or data.keys() != CONFIG_SETTINGS.keys():
         Text.error(
-            "Data in config file changed or corrupted. Please run 'ghtickit setup'"
+            "Data in config file changed or corrupted. Please run 'octotrack setup'"
         )
         exit(1)
 

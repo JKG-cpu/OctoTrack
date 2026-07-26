@@ -3,7 +3,7 @@ from rich.progress import Progress
 from rich.status import Status
 
 
-__all__ = ["CHECKMARK", "TOKEN_NAME", "CONFIG_SETTINGS", "CLI_NAME", "Text"]
+__all__ = ["CHECKMARK", "TOKEN_NAME", "CONFIG_SETTINGS", "Text"]
 
 
 # ASCII Characters
@@ -14,10 +14,10 @@ CHECKMARK = "✓"
 TOKEN_NAME = "GITHUB_TOKEN"
 CONFIG_SETTINGS = {
     "default_owner": None,
+    "default_repo": None,
     "default_pr_state": "open",
     "api_base_url": "https://api.github.com",
 }
-CLI_NAME = "octotrack"
 
 
 # Custom Text Output

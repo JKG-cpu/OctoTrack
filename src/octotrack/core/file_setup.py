@@ -1,16 +1,16 @@
 from pathlib import Path
 
+from .flags import GitHubTokenStatus
+from .config_handler import load_github_token
 from ..utils import (
     Text,
     setup_paths,
     validate_paths,
     remove_paths,
+    load_config,
     DATA_DIR,
     CONFIG_DIR,
-    CLI_NAME
 )
-from .config_handler import load_github_token
-from .flags import GitHubTokenStatus
 
 __all__ = ["setup", "validate", "remove"]
 
@@ -30,19 +30,30 @@ def setup() -> None:
 
 
 def validate() -> None:
+    valid_config = True
+
     try:
         with Text.status("Checking Files and Directories...", style="bold cyan"):
             paths: list[Path] = validate_paths()
             token_status: GitHubTokenStatus = load_github_token()
 
+            try:
+                load_config()
+
+            except SystemExit:
+                valid_config = False
+
         if paths:
             Text.error("Not all paths exist... some may have been moved or deleted.")
-            Text.info(f"Please run '{CLI_NAME} setup' to complete the path setup.")
+            Text.info("Please run 'octotrack setup' to complete the path setup.")
 
         elif token_status == GitHubTokenStatus.INVALID_PATH:
             Text.error(
-                f"A path for the config is missing. Please run '{CLI_NAME} setup' to complete the path setup."
+                "A path for the config is missing. Please run 'octotrack setup' to complete the path setup."
             )
+
+        elif not valid_config:
+            pass
 
         else:
             Text.success("All files and directories are present.")
@@ -51,7 +62,7 @@ def validate() -> None:
 
             elif token_status == GitHubTokenStatus.TOKEN_NOT_SET:
                 Text.info(
-                    f"GitHub token is not set. Please run '{CLI_NAME} config --set-token'"
+                    "GitHub token is not set. Please run 'octotrack config edit-token'"
                 )
 
     except Exception as e:
@@ -69,7 +80,7 @@ def remove() -> None:
             with Text.status("Removing Files and Directories...", style="bold cyan"):
                 remove_paths()
 
-            Text.success(f"Removed all files and directories created by {CLI_NAME}.")
+            Text.success("Removed all files and directories created by octotrack.")
 
         elif confirm.lower().startswith("n"):
             Text.info("Canceled.")

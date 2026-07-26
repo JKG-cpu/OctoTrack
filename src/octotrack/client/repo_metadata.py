@@ -1,16 +1,19 @@
 import httpx
 import os
 
-from ..utils import load_config, Text, TOKEN_NAME, CLI_NAME
+from ..utils import load_config, Text, TOKEN_NAME
 from ..core import load_github_token, GitHubTokenStatus
 
 
-class GitHubClient:
+__all__ = ["Client"]
+
+
+class Client:
     def __init__(self) -> None:
         self._load_token()
         self.config: dict = load_config()
 
-        self.httpx_client = httpx.AsyncClient(
+        self.client = httpx.AsyncClient(
             base_url=self.config["api_base_url"], headers=self._load_headers()
         )
 
@@ -19,12 +22,12 @@ class GitHubClient:
 
         if status == GitHubTokenStatus.INVALID_PATH:
             Text.error("Not all paths exist... some may have been moved or deleted.")
-            Text.info(f"Please run '{CLI_NAME} setup' to complete the path setup.")
+            Text.info("Please run 'octotrack setup' to complete the path setup.")
             exit(1)
 
         elif status == GitHubTokenStatus.TOKEN_NOT_SET:
             Text.warning(
-                f"[!] GitHub token not set. Run '{CLI_NAME} config --setup-token' to set a GitHub Auth Token."
+                "[!] GitHub token not set. Run 'octotrack config set-token' to set a GitHub Auth Token."
             )
             exit(1)
 
@@ -36,8 +39,9 @@ class GitHubClient:
             "User-Agent": "ghticket",
         }
 
+    # Base Get Method
     async def _get(self, path: str, **params) -> httpx.Response:
-        response = await self.httpx_client.get(path, params=params)
+        response = await self.client.get(path, params=params)
 
         self.rate_remaining = int(response.headers.get("x-ratelimit-remaining", 0))
         self.rate_reset = int(response.headers.get("x-ratelimit-reset", 0))
@@ -45,14 +49,14 @@ class GitHubClient:
         response.raise_for_status()
         return response
 
-    async def get_repo(self, repo: str, user: str | None = None) -> httpx.Response:
-        if not user:
+    async def get_repo(self, repo: str, owner: str | None) -> httpx.Response:
+        if not owner:
             if not self.config["default_owner"]:
                 Text.error(
-                    f"You must specify a user OR set a default user with '{CLI_NAME} config edit default_owner OWNERNAME'"
+                    "You must specify a user OR set a default user with 'octotrack config set default_owner OWNERNAME' or 'octotrack repo default <owner/repo>"
                 )
                 exit(1)
 
-            user = self.config["default_owner"]
+            owner = self.config["default_owner"]
 
-        return await self._get(f"/repos/{user}/{repo}")
+        return await self._get(f"/repos/{owner}/{repo}")
