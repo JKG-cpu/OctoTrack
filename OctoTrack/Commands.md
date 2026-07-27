@@ -23,6 +23,7 @@
 | `octotrack config show`              | Show the current config                    |
 | `octotrack config set-token`         | Set the GitHub Token, saved in a .env file |
 | `octotrack config set <key> <value>` | Directly set key / value                   |
+| `octotrack config clear <key>`       | Clear config OR value                      |
 | `octotrack config path`              | Print Config Path                          |
 ### Config Settings
 ```json

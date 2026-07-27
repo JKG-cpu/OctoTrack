@@ -1,6 +1,6 @@
 import typer
 
-from ..core import ConfigKey, edit_config, show_config, edit_github_token
+from ..core import ConfigKey, edit_config, show_config, edit_github_token, clear
 from ..utils import Text, CONFIG_SETTINGS_PATH
 
 __all__ = ["app"]
@@ -21,6 +21,11 @@ def edit_token() -> None:
 @app.command(name="set")
 def set_config(key: ConfigKey, value: str) -> None:
     edit_config(key, value)
+
+
+@app.command(name = "clear")
+def cls(key: ConfigKey = typer.Option(None, "--key", "-k", help="Clear a setting in the config OR clear all config")) -> None:
+    clear(key)
 
 
 @app.command()
