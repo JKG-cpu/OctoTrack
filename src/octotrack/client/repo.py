@@ -5,10 +5,10 @@ from ..utils import load_config, Text, TOKEN_NAME
 from ..core import load_github_token, GitHubTokenStatus
 
 
-__all__ = ["Client"]
+__all__ = ["RepoClient"]
 
 
-class Client:
+class RepoClient:
     def __init__(self) -> None:
         self._load_token()
         self.config: dict = load_config()
@@ -36,7 +36,7 @@ class Client:
             "Accept": "application/vnd.github+json",
             "X-GitHub-Api-Version": "2022-11-28",
             "Authorization": f"Bearer {os.environ.get(TOKEN_NAME)}",
-            "User-Agent": "ghticket",
+            "User-Agent": "octotrack",
         }
 
     # Base Get Method

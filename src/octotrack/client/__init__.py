@@ -1,1 +1,1 @@
-from .repo_metadata import Client as RepoClient
+from .repo import RepoClient

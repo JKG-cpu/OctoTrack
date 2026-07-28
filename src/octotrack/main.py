@@ -1,4 +1,4 @@
-from .bundler import app
+from .cli import app
 
 __all__ = ["main"]
 
