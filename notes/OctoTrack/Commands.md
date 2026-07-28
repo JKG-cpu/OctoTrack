@@ -1,13 +1,16 @@
 > Base command: `octotrack`
 
 ## Todos
-- [x] Create all the setup commands
-- [x] Add the functions for the setup commands
-- [x] Create all the config commands
-- [x] Add the functions for the config commands
-- [x] Create all the repository metadata commands
-- [x] Add the functions for the repository metadata commands
-- [ ] Allow clearing / resetting config values
+- [x] Create Pydantic models for `octotrack repo info`
+- [x] Create a display for models when commands like `octotrack repo info` are used
+	- This might be temporary, depending on how I decided to handle themes
+- [ ] Need to create Pydantic models for the rest of the `octotrack repo` commands
+- [ ] Display models for the rest of the `octotrack repo` commands
+---
+- [ ] Start creating commands (structure) for commits, branches & tags, releases, issues, and pull requests
+- [ ] Create models for commits, branches & tags, releases, issues, and pull requests
+- [ ] Display models for commits, branches & tags, releases, issues, and pull requests
+- [ ] [^2]Publish `v0.1.0`
 
 ## Setup
 
@@ -60,3 +63,10 @@ CONFIG_SETTINGS = {
 	-  Created at
 	-  Updated at
 	-  Pushed at
+
+[^2]: Need to update / create the things listed below
+	1. Update project `README.md`
+	2. Updated `pyproject.toml`
+	3. Create / update `requirements.txt`
+	4. Create a workflow (for when a tag is created + pushed)
+	5. ***PUSH*** workflow first, ***THEN*** tag it and push

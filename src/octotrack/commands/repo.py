@@ -1,12 +1,11 @@
 import typer
 import asyncio
-from pprint import pprint
 
 from ..client import RepoClient
 from ..core import ConfigKey, edit_config
 from ..utils import load_config, Text
 from ..models import RepositoryInfo
-from ..display import RenderRepoInfo
+from ..display import RepoInfoRenderer
 
 
 app = typer.Typer()
@@ -37,7 +36,7 @@ def _parse_owner_repo(value: str | None, config: dict) -> tuple[str, str]:
 async def _repo_info(owner: str, repo: str) -> None:
     client = RepoClient()
     response = await client.get_repo(repo, owner)
-    RenderRepoInfo(RepositoryInfo.model_validate(response.json())).render()
+    RepoInfoRenderer(RepositoryInfo.model_validate(response.json())).render()
 
 
 # Commands

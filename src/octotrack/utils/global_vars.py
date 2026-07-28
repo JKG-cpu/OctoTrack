@@ -39,19 +39,19 @@ class Text:
 
     @staticmethod
     def success(text: str) -> None:
-        _console.print(f"[bold green]{CHECKMARK} {text}[/bold green]")
+        _console.print(f"[status.success]{CHECKMARK} {text}[/status.success]")
 
     @staticmethod
     def error(text: str) -> None:
-        _console.print(f"[bold red]{text}[/bold red]")
+        _console.print(f"[status.error]{text}[/status.error]")
 
     @staticmethod
     def warning(text: str) -> None:
-        _console.print(f"[bold yellow]{text}[/bold yellow]")
+        _console.print(f"[status.warning]{text}[/status.warning]")
 
     @staticmethod
     def info(text: str) -> None:
-        _console.print(f"[bold cyan]{text}[/bold cyan]")
+        _console.print(f"[status.info]{text}[/status.info]")
 
     @staticmethod
     def progress() -> Progress:

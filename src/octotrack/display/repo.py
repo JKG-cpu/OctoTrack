@@ -9,10 +9,10 @@ from ..utils import _console as c
 from ..models import RepositoryInfo
 
 
-__all__ = ["RenderRepoInfo"]
+__all__ = ["RepoInfoRenderer"]
 
 
-class RenderRepoInfo:
+class RepoInfoRenderer:
     def __init__(self, repo_info: RepositoryInfo) -> None:
         self.repo_info = repo_info
         self.console = c

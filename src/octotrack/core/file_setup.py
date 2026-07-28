@@ -17,7 +17,7 @@ __all__ = ["setup", "validate", "remove"]
 
 def setup() -> None:
     try:
-        with Text.status("Setting Up Files and Directories...", style="bold cyan"):
+        with Text.status("Setting Up Files and Directories...", style="text.base_text"):
             setup_paths()
 
         Text.success("Files and Directories Set Up!")
@@ -33,7 +33,7 @@ def validate() -> None:
     valid_config = True
 
     try:
-        with Text.status("Checking Files and Directories...", style="bold cyan"):
+        with Text.status("Checking Files and Directories...", style="text.base_text"):
             paths: list[Path] = validate_paths()
             token_status: GitHubTokenStatus = load_github_token()
 
@@ -73,11 +73,11 @@ def remove() -> None:
     try:
         confirm: str = Text.get_input(
             text="Are you sure you would like to remove all data and config files? (y/n)",
-            style="bold yellow",
+            style="status.warning",
         )
 
         if confirm.lower().startswith("y"):
-            with Text.status("Removing Files and Directories...", style="bold cyan"):
+            with Text.status("Removing Files and Directories...", style="text.base_text"):
                 remove_paths()
 
             Text.success("Removed all files and directories created by octotrack.")

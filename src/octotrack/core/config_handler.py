@@ -53,7 +53,7 @@ def save_github_token(token: str) -> None:
 
 
 def edit_github_token() -> None:
-    Text.text("Enter in your GitHub token: ", style="bold cyan", end="")
+    Text.text("Enter in your GitHub token: ", style="text.base_text", end="")
     token = getpass("").strip()
 
     save_github_token(token)
@@ -67,7 +67,7 @@ def edit_github_token() -> None:
 # GitHub Config
 # region
 def edit_config(key: ConfigKey, value: str) -> None:
-    with Text.status(f"Changing '{key}' in config...", style="bold cyan"):
+    with Text.status(f"Changing '{key}' in config...", style="text.base_text"):
         config_settings = load_config()
         config_settings[key] = value
         save_config(config_settings)
@@ -78,10 +78,10 @@ def edit_config(key: ConfigKey, value: str) -> None:
 def show_config() -> None:
     config_settings = load_config()
 
-    Text.text("--- Config Settings ---", style="bold cyan")
+    Text.text("--- Config Settings ---", style="text.header")
 
     for name, value in config_settings.items():
-        Text.text(f"{name}: {value}", style="bold white")
+        Text.text(f"{name}: {value}", style="text.base_text")
 
     print()
 
