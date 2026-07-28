@@ -23,8 +23,12 @@ def set_config(key: ConfigKey, value: str) -> None:
     edit_config(key, value)
 
 
-@app.command(name = "clear")
-def cls(key: ConfigKey = typer.Option(None, "--key", "-k", help="Clear a setting in the config OR clear all config")) -> None:
+@app.command(name="clear")
+def cls(
+    key: ConfigKey = typer.Option(
+        None, "--key", "-k", help="Clear a setting in the config OR clear all config"
+    ),
+) -> None:
     clear(key)
 
 

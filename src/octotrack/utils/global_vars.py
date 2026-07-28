@@ -2,8 +2,10 @@ from rich.console import Console
 from rich.progress import Progress
 from rich.status import Status
 
+from .theme import OCTOTRACK_THEME
 
-__all__ = ["CHECKMARK", "TOKEN_NAME", "CONFIG_SETTINGS", "Text"]
+
+__all__ = ["CHECKMARK", "TOKEN_NAME", "CONFIG_SETTINGS", "_console", "Text"]
 
 
 # ASCII Characters
@@ -21,7 +23,7 @@ CONFIG_SETTINGS = {
 
 
 # Custom Text Output
-_console: Console = Console()
+_console: Console = Console(theme=OCTOTRACK_THEME)
 _console.style = "bold white"
 
 

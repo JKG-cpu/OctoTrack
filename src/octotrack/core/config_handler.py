@@ -4,7 +4,14 @@ from enum import Enum
 from getpass import getpass
 from dotenv import load_dotenv
 
-from ..utils import Text, TOKEN_NAME, ENV_PATH, load_config, save_config, CONFIG_SETTINGS
+from ..utils import (
+    Text,
+    TOKEN_NAME,
+    ENV_PATH,
+    load_config,
+    save_config,
+    CONFIG_SETTINGS,
+)
 from .flags import GitHubTokenStatus
 
 __all__ = [
@@ -13,7 +20,7 @@ __all__ = [
     "edit_config",
     "show_config",
     "load_github_token",
-    "clear"
+    "clear",
 ]
 
 
@@ -89,5 +96,6 @@ def clear(key: ConfigKey | None) -> None:
         save_config(CONFIG_SETTINGS)
 
     Text.info("Change successful.")
+
 
 # endregion
