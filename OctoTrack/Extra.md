@@ -1,0 +1,3 @@
+- [How to create a GitHub Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens?apiVersion=2026-03-10&versionId=free-pro-team%40latest&productId=rest)
+- [GitHub REST API Repository Endpoints](https://docs.github.com/en/rest/repos/contents?apiVersion=2026-03-10&versionId=free-pro-team%40latest&productId=authentication&restPage=keeping-your-account-and-data-secure%2Cmanaging-your-personal-access-tokens)
+- 

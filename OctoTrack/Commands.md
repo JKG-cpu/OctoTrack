@@ -36,15 +36,16 @@ CONFIG_SETTINGS = {
 ```
 ## Repository
 ### Metadata
-| Command                                       | Description                                       |
-| --------------------------------------------- | ------------------------------------------------- |
-| `octotrack repo default <owner/repo>`         | Set the default repository and / or owner quickly |
-| `octotrack repo info <owner/repo>`            | [^1] General repository information               |
-| `octotrack repo languages <owner/repo>`       | Breakdown of languages used                       |
-| `octotrack repo topics <owner/repo>`          | Repository topics / tags                          |
-| `octotrack repo contents <owner/repo> <path>` | File / directory contents at a given ref          |
-| `octotrack repo readme <owner/repo>`          | Get the repository's README.md                    |
-| `octotrack repo license <owner/repo>`         | Get the repository's LICENSE                      |
+| Command                                       | Description                                                              |
+| --------------------------------------------- | ------------------------------------------------------------------------ |
+| `octotrack repo default <owner/repo>`         | Set the default repository and / or owner quickly                        |
+| `octotrack repo info <owner/repo>`            | [^1] General repository information                                      |
+| `octotrack repo languages <owner/repo>`       | Breakdown of languages used                                              |
+| `octotrack repo topics <owner/repo>`          | Repository topics / tags                                                 |
+| `octotrack repo contents <owner/repo> <path>` | File / directory contents at a given ref                                 |
+| `octotrack repo readme <owner/repo>`          | Get the repository's README.md                                           |
+| `octotrack repo license <owner/repo>`         | Get the repository's LICENSE                                             |
+| `octotrack repo permissions <owner/repo>`     | Get the permissions for the repository (based on your GitHub Auth Token) |
 
 
 [^1]: General Repository Info includes
@@ -53,8 +54,6 @@ CONFIG_SETTINGS = {
 	-  Visibility
 	-  Size
 	-  Stars / forks / watchers counts
-	-  License
-	-  Topics
 	-  Homepage
 	-  Archived
 	-  Status
