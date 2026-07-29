@@ -6,8 +6,7 @@ OCTOTRACK_THEME = Theme(
     {
         "repo.title": "bold cyan",
         "repo.owner": "blue",
-        "repo.stats": "yellow",
-        "repo.metadata": "green",
+        "repo.permissions": "magenta",
         "status.archived": "bold red",
         "status.visibility": "bold magenta",
         "status.success": "bold green",

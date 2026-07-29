@@ -6,6 +6,7 @@ from ..core import ConfigKey, edit_config
 from ..utils import load_config, Text
 from ..models import RepositoryInfo
 from ..display import RepoInfoRenderer
+from pprint import pprint
 
 
 app = typer.Typer()
@@ -36,7 +37,9 @@ def _parse_owner_repo(value: str | None, config: dict) -> tuple[str, str]:
 async def _repo_info(owner: str, repo: str) -> None:
     client = RepoClient()
     response = await client.get_repo(repo, owner)
-    RepoInfoRenderer(RepositoryInfo.model_validate(response.json())).render()
+    base, readme = response
+    RepoInfoRenderer(RepositoryInfo.model_validate(base.json())).render()
+    pprint(readme.json())
 
 
 # Commands

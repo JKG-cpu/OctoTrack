@@ -1,9 +1,10 @@
 from datetime import datetime
 
-from rich.panel import Panel
 from rich.text import Text
 from rich.table import Table
+from rich.panel import Panel
 from rich.console import Group
+from rich.rule import Rule
 
 from ..utils import _console as c
 from ..models import RepositoryInfo
@@ -25,78 +26,94 @@ class RepoInfoRenderer:
         return f"{size_kb} KB"
 
     def _format_date(self, dt: datetime) -> str:
-        return dt.strftime("%Y-%m-%d %H:%M")
+        return dt.strftime("%Y-%m-%d")
 
-    def _build_owner_panel(self, height: int) -> Panel:
-        owner = self.repo_info.owner
-        table = Table.grid(padding=(0, 1))
-        table.add_column(style="label")
-        table.add_column(style="value")
-        table.add_row("Login", owner.login)
-        table.add_row("Type", owner.type)
-        table.add_row("URL", owner.html_url)
-        return Panel(table, title="Owner", border_style="repo.owner", height=height)
-
-    def _build_stats_panel(self, height: int) -> Panel:
-        table = Table.grid(padding=(0, 1))
-        table.add_column(style="label")
-        table.add_column(style="value", justify="right")
-        table.add_row("Stars", str(self.repo_info.stargazers_count))
-        table.add_row("Forks", str(self.repo_info.forks))
-        table.add_row("Watchers", str(self.repo_info.watchers))
-        table.add_row("Size", self._format_size(self.repo_info.size))
-        return Panel(table, title="Stats", border_style="repo.stats", height=height)
-
-    def _build_metadata_panel(self, height: int) -> Panel:
-        table = Table.grid(padding=(0, 1))
-        table.add_column(style="label")
-        table.add_column(style="value")
-        table.add_row("Default branch", self.repo_info.default_branch)
-        table.add_row("Homepage", self.repo_info.homepage or "—")
-        table.add_row("Created", self._format_date(self.repo_info.created_at))
-        table.add_row("Updated", self._format_date(self.repo_info.updated_at))
-        table.add_row("Pushed", self._format_date(self.repo_info.pushed_at))
-        return Panel(
-            table, title="Metadata", border_style="repo.metadata", height=height
-        )
-
-    def _build_header(self) -> Text:
-        header = Text(justify="center")
-        header.append(f"{self.repo_info.visibility.upper()}", style="status.visibility")
+    def _build_badges(self) -> Text:
+        badges = Text()
+        badges.append(f" {self.repo_info.visibility.upper()} ", style="status.visibility")
         if self.repo_info.archived:
-            header.append("  ARCHIVED", style="status.archived")
-        header.append("\n")
-        header.append(
+            badges.append("  ")
+            badges.append(" ARCHIVED ", style="status.archived")
+        badges.append("  ")
+        badges.append(self.repo_info.language, style="repo.stats")
+        if self.repo_info.license:
+            badges.append("  ·  ")
+            badges.append(self.repo_info.license.name, style="muted")
+        return badges
+
+    def _build_header(self) -> Group:
+        title = Text(self.repo_info.full_name, style="repo.title")
+        badges = self._build_badges()
+        description = Text(
             self.repo_info.description or "No description provided",
             style="value" if self.repo_info.description else "muted",
         )
-        return header
+        return Group(title, badges, Text(), description)
+
+    def _build_stat_bar(self) -> Table:
+        stats = Table.grid(padding=(0, 3), expand=False)
+        for _ in range(4):
+            stats.add_column(justify="left")
+
+        def stat(icon: str, value: str, label: str) -> Text:
+            t = Text()
+            t.append(f"{icon} ", style="repo.stats")
+            t.append(f"{value} ", style="text.base_text")
+            t.append(label, style="label")
+            return t
+
+        stats.add_row(
+            stat("★", str(self.repo_info.stargazers_count), "stars"),
+            stat("⑂", str(self.repo_info.forks), "forks"),
+            stat("◎", str(self.repo_info.watchers), "watchers"),
+            stat("▣", self._format_size(self.repo_info.size), "size"),
+        )
+        return stats
+
+    def _build_permissions_line(self) -> Text:
+        perms = self.repo_info.permissions
+        line = Text()
+        line.append("Access  ", style="label")
+        entries = [
+            ("Admin", perms.admin),
+            ("Maintain", perms.maintain),
+            ("Push", perms.push),
+            ("Pull", perms.pull),
+        ]
+        for i, (name, granted) in enumerate(entries):
+            if i:
+                line.append("  ")
+            line.append("✓ " if granted else "✗ ", style="perm.yes" if granted else "perm.no")
+            line.append(name, style="value" if granted else "muted")
+        return line
+
+    def _build_body(self) -> Table:
+        owner = self.repo_info.owner
+        grid = Table.grid(padding=(0, 2))
+        grid.add_column(style="label", justify="right")
+        grid.add_column(style="value")
+
+        grid.add_row("Owner", f"{owner.login} ({owner.type})")
+        grid.add_row("URL", self.repo_info.html_url)
+        grid.add_row("Default branch", self.repo_info.default_branch)
+        grid.add_row("Homepage", self.repo_info.homepage or "—")
+        grid.add_row(
+            "Timeline",
+            f"created {self._format_date(self.repo_info.created_at)}   ·   "
+            f"pushed {self._format_date(self.repo_info.pushed_at)}   ·   "
+            f"updated {self._format_date(self.repo_info.updated_at)}",
+        )
+        return grid
 
     def render(self) -> None:
-        header = self._build_header()
-
-        top_row = Table.grid(expand=True)
-        top_row.add_column(ratio=1)
-        top_row.add_column(ratio=1)
-        top_row.add_column(ratio=1)
-
-        owner_lines = 3
-        stats_lines = 4
-        metadata_lines = 5
-        target_height = max(owner_lines, stats_lines, metadata_lines) + 2
-
-        top_row.add_row(
-            self._build_owner_panel(height=target_height),
-            self._build_stats_panel(height=target_height),
-            self._build_metadata_panel(height=target_height),
-        )
-
         body = Group(
-            header,
+            self._build_header(),
             Text(),
-            top_row,
+            self._build_stat_bar(),
+            Rule(style="muted"),
+            self._build_body(),
+            Text(),
+            self._build_permissions_line(),
         )
 
-        self.console.print(
-            Panel(body, title=self.repo_info.full_name, border_style="repo.title")
-        )
+        self.console.print(Panel(body, border_style="repo.owner", padding=(1, 2)))

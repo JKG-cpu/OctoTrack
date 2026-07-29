@@ -49,7 +49,8 @@ class RepoClient:
         response.raise_for_status()
         return response
 
-    async def get_repo(self, repo: str, owner: str | None) -> httpx.Response:
+    async def get_repo(self, repo: str, owner: str | None) -> list[httpx.Response, httpx.Response]:
+        """Returns Repo Response + README Response"""
         if not owner:
             if not self.config["default_owner"]:
                 Text.error(
@@ -59,4 +60,7 @@ class RepoClient:
 
             owner = self.config["default_owner"]
 
-        return await self._get(f"/repos/{owner}/{repo}")
+        base = await self._get(f"/repos/{owner}/{repo}")
+        readme = await self._get(f"/repos/{owner}/{repo}/readme")
+
+        return [base, readme]

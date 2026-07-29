@@ -43,13 +43,9 @@ CONFIG_SETTINGS = {
 | --------------------------------------------- | ------------------------------------------------------------------------ |
 | `octotrack repo default <owner/repo>`         | Set the default repository and / or owner quickly                        |
 | `octotrack repo info <owner/repo>`            | [^1] General repository information                                      |
-| `octotrack repo languages <owner/repo>`       | Breakdown of languages used                                              |
-| `octotrack repo topics <owner/repo>`          | Repository topics / tags                                                 |
 | `octotrack repo contents <owner/repo> <path>` | File / directory contents at a given ref                                 |
 | `octotrack repo readme <owner/repo>`          | Get the repository's README.md                                           |
 | `octotrack repo license <owner/repo>`         | Get the repository's LICENSE                                             |
-| `octotrack repo permissions <owner/repo>`     | Get the permissions for the repository (based on your GitHub Auth Token) |
-
 
 [^1]: General Repository Info includes
 	-  Description
@@ -59,10 +55,11 @@ CONFIG_SETTINGS = {
 	-  Stars / forks / watchers counts
 	-  Homepage
 	-  Archived
-	-  Status
 	-  Created at
 	-  Updated at
 	-  Pushed at
+	-  License (if available)
+	-  Read me (if available)
 
 [^2]: Need to update / create the things listed below
 	1. Update project `README.md`
