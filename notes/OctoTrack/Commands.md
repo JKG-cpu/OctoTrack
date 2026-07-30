@@ -8,7 +8,7 @@
 	- [x] `octotrack repo readme <owner/repo>`
 	- [x] `octotrack repo contents <owner/repo> <path>`
 - [x] Run a few tests (configured by Claude)
-- [ ] [^2]Publish `v0.1.0`
+- [x] [^2]Publish `v0.1.0`
 ---
 - [ ] Start creating commands (structure) for commits, branches & tags, releases, issues, and pull requests
 - [ ] Create models for commits, branches & tags, releases, issues, and pull requests
