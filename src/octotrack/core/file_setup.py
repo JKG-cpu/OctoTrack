@@ -77,7 +77,9 @@ def remove() -> None:
         )
 
         if confirm.lower().startswith("y"):
-            with Text.status("Removing Files and Directories...", style="text.base_text"):
+            with Text.status(
+                "Removing Files and Directories...", style="text.base_text"
+            ):
                 remove_paths()
 
             Text.success("Removed all files and directories created by octotrack.")

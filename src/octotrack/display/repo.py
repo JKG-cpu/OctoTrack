@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from rich.markdown import Markdown
 from rich.text import Text
 from rich.table import Table
 from rich.panel import Panel
@@ -7,15 +8,26 @@ from rich.console import Group
 from rich.rule import Rule
 
 from ..utils import _console as c
-from ..models import RepositoryInfo
+from ..models import RepositoryInfo, RepositoryReadme
 
 
-__all__ = ["RepoInfoRenderer"]
+__all__ = ["RepoInfoRenderer", "display_readme"]
+
+
+def display_readme(repo_info: RepositoryReadme) -> None:
+    c.print(
+        Panel(
+            Markdown(repo_info.content),
+            title=repo_info.name,
+            border_style="repo.owner",
+            padding=(1, 2),
+        )
+    )
 
 
 class RepoInfoRenderer:
     def __init__(self, repo_info: RepositoryInfo) -> None:
-        self.repo_info = repo_info
+        self.repo_info: RepositoryInfo = repo_info
         self.console = c
 
     def _format_size(self, size_kb: int) -> str:
@@ -30,7 +42,9 @@ class RepoInfoRenderer:
 
     def _build_badges(self) -> Text:
         badges = Text()
-        badges.append(f" {self.repo_info.visibility.upper()} ", style="status.visibility")
+        badges.append(
+            f" {self.repo_info.visibility.upper()} ", style="status.visibility"
+        )
         if self.repo_info.archived:
             badges.append("  ")
             badges.append(" ARCHIVED ", style="status.archived")
@@ -39,6 +53,9 @@ class RepoInfoRenderer:
         if self.repo_info.license:
             badges.append("  ·  ")
             badges.append(self.repo_info.license.name, style="muted")
+        if self.repo_info.readme:
+            badges.append("  ·  ")
+            badges.append(self.repo_info.readme.name, style="muted")
         return badges
 
     def _build_header(self) -> Group:
@@ -83,7 +100,9 @@ class RepoInfoRenderer:
         for i, (name, granted) in enumerate(entries):
             if i:
                 line.append("  ")
-            line.append("✓ " if granted else "✗ ", style="perm.yes" if granted else "perm.no")
+            line.append(
+                "✓ " if granted else "✗ ", style="perm.yes" if granted else "perm.no"
+            )
             line.append(name, style="value" if granted else "muted")
         return line
 

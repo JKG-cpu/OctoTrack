@@ -2,7 +2,13 @@ from pydantic import BaseModel
 from typing import Literal
 from datetime import datetime
 
-__all__ = ["RepositoryOwner", "RepositoryInfo"]
+__all__ = [
+    "RepositoryOwner",
+    "RepositoryPermissions",
+    "RepositoryLicense",
+    "RepositoryReadme",
+    "RepositoryInfo",
+]
 
 
 class RepositoryOwner(BaseModel):
@@ -25,6 +31,11 @@ class RepositoryLicense(BaseModel):
     url: str
 
 
+class RepositoryReadme(BaseModel):
+    content: str
+    name: str
+
+
 class RepositoryInfo(BaseModel):
     owner: RepositoryOwner
     full_name: str
@@ -32,22 +43,23 @@ class RepositoryInfo(BaseModel):
     html_url: str
 
     description: str | None = None
-    language: str 
+    language: str
     default_branch: str
     visibility: Literal["private", "public", "internal"]
-    
+
     permissions: RepositoryPermissions
     license: RepositoryLicense | None = None
+    readme: RepositoryReadme | None = None
 
     size: int
-    
+
     stargazers_count: int
     forks: int
     watchers: int
     homepage: str | None = None
-    
+
     archived: bool
-    
+
     created_at: datetime
     updated_at: datetime
     pushed_at: datetime

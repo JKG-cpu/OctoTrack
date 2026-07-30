@@ -49,7 +49,9 @@ class RepoClient:
         response.raise_for_status()
         return response
 
-    async def get_repo(self, repo: str, owner: str | None) -> list[httpx.Response, httpx.Response]:
+    async def get_repo(
+        self, repo: str, owner: str | None
+    ) -> list[httpx.Response, httpx.Response]:
         """Returns Repo Response + README Response"""
         if not owner:
             if not self.config["default_owner"]:
@@ -60,7 +62,16 @@ class RepoClient:
 
             owner = self.config["default_owner"]
 
-        base = await self._get(f"/repos/{owner}/{repo}")
-        readme = await self._get(f"/repos/{owner}/{repo}/readme")
+        return await self._get(f"/repos/{owner}/{repo}")
 
-        return [base, readme]
+    async def get_readme(self, repo: str, owner: str | None) -> None:
+        if not owner:
+            if not self.config["default_owner"]:
+                Text.error(
+                    "You must specify a user OR set a default user with 'octotrack config set default_owner OWNERNAME' or 'octotrack repo default <owner/repo>"
+                )
+                exit(1)
+
+            owner = self.config["default_owner"]
+
+        return await self._get(f"/repos/{owner}/{repo}/readme")

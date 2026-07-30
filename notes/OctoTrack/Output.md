@@ -1,3 +1,4 @@
+## Repo Output
 ```json
 {
 'allow_forking': True,
@@ -111,4 +112,22 @@
  'watchers_count': 1,
  'web_commit_signoff_required': False
 }
+```
+
+## Read me Output
+```json
+{'_links': {'git': 'https://api.github.com/repos/JKG-cpu/OctoTrack/git/blobs/f6d072d9836752cbb69e5834b0b3ed6d8585f1c4',
+            'html': 'https://github.com/JKG-cpu/OctoTrack/blob/main/README.md',
+            'self': 'https://api.github.com/repos/JKG-cpu/OctoTrack/contents/README.md?ref=main'},
+ 'content': 'IyBDTEkgQ2xpZW50IGZvciBHaXRIdWIKQW4gQXN5bmMgQVBJIENMSSBDbGll\nbnQgZm9yIEdpdEh1YiB0aGF0IGNhbiBiZSB1c2VkIHRvIHRyYWNrIHRoaW5n\n',
+ 'download_url': 'https://raw.githubusercontent.com/JKG-cpu/OctoTrack/main/README.md',
+ 'encoding': 'base64',
+ 'git_url': 'https://api.github.com/repos/JKG-cpu/OctoTrack/git/blobs/f6d072d9836752cbb69e5834b0b3ed6d8585f1c4',
+ 'html_url': 'https://github.com/JKG-cpu/OctoTrack/blob/main/README.md',
+ 'name': 'README.md',
+ 'path': 'README.md',
+ 'sha': 'f6d072d9836752cbb69e5834b0b3ed6d8585f1c4',
+ 'size': 113,
+ 'type': 'file',
+ 'url': 'https://api.github.com/repos/JKG-cpu/OctoTrack/contents/README.md?ref=main'}
 ```

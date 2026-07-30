@@ -3,14 +3,17 @@
 ## Todos
 - [x] Create Pydantic models for `octotrack repo info`
 - [x] Create a display for models when commands like `octotrack repo info` are used
-	- This might be temporary, depending on how I decided to handle themes
-- [ ] Need to create Pydantic models for the rest of the `octotrack repo` commands
-- [ ] Display models for the rest of the `octotrack repo` commands
+	- This might be temporary, depending on how I decided to [^3]handle themes
+- [ ] Need to create Pydantic models for the rest of the `octotrack repo` commands + Display models for the rest of the `octotrack repo` commands
+	- [x] `octotrack repo readme <owner/repo>`
+	- [ ] `octotrack repo license <owner/repo>`
+	- [ ] `octotrack repo contents <owner/repo> <path>`
+- [ ] [^2]Publish `v0.1.0`
 ---
 - [ ] Start creating commands (structure) for commits, branches & tags, releases, issues, and pull requests
 - [ ] Create models for commits, branches & tags, releases, issues, and pull requests
 - [ ] Display models for commits, branches & tags, releases, issues, and pull requests
-- [ ] [^2]Publish `v0.1.0`
+- [ ] [^2]Publish `v0.2.0`
 
 ## Setup
 
@@ -65,5 +68,7 @@ CONFIG_SETTINGS = {
 	1. Update project `README.md`
 	2. Updated `pyproject.toml`
 	3. Create / update `requirements.txt`
-	4. Create a workflow (for when a tag is created + pushed)
+	4. Create / update a workflow (for when a tag is created + pushed)
 	5. ***PUSH*** workflow first, ***THEN*** tag it and push
+
+[^3]: Changing themes / colors will be implemented in a different version, not `v0.1.0` or `v0.2.0`. Maybe `v0.3.0`.
