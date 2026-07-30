@@ -4,9 +4,10 @@
 - [x] Create Pydantic models for `octotrack repo info`
 - [x] Create a display for models when commands like `octotrack repo info` are used
 	- This might be temporary, depending on how I decided to [^3]handle themes
-- [ ] Need to create Pydantic models for the rest of the `octotrack repo` commands + Display models for the rest of the `octotrack repo` commands
+- [x] Need to create Pydantic models for the rest of the `octotrack repo` commands + Display models for the rest of the `octotrack repo` commands
 	- [x] `octotrack repo readme <owner/repo>`
-	- [ ] `octotrack repo contents <owner/repo> <path>`
+	- [x] `octotrack repo contents <owner/repo> <path>`
+- [x] Run a few tests (configured by Claude)
 - [ ] [^2]Publish `v0.1.0`
 ---
 - [ ] Start creating commands (structure) for commits, branches & tags, releases, issues, and pull requests
