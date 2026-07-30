@@ -3,12 +3,21 @@ from typing import Literal
 from datetime import datetime
 
 __all__ = [
+    "RepositoryContent",
     "RepositoryOwner",
     "RepositoryPermissions",
     "RepositoryLicense",
     "RepositoryReadme",
     "RepositoryInfo",
 ]
+
+
+class RepositoryContent(BaseModel):
+    name: str
+    path: str
+    size: int
+    type: str
+    content: list['RepositoryContent'] | None = None
 
 
 class RepositoryOwner(BaseModel):

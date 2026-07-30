@@ -5,8 +5,8 @@ import base64
 from ..client import RepoClient
 from ..core import ConfigKey, edit_config
 from ..utils import load_config, Text
-from ..models import RepositoryInfo, RepositoryReadme
-from ..display import RepoInfoRenderer, display_readme
+from ..models import RepositoryInfo, RepositoryReadme, RepositoryContent
+from ..display import RepoInfoRenderer, display_readme, display_contents
 
 
 app = typer.Typer()
@@ -66,8 +66,16 @@ async def _get_readme(owner: str, repo: str) -> None:
         )
     )
 
+async def _get_content(
+    owner: str, repo: str, path: str, hidden: bool, depth: int
+) -> list[RepositoryContent]:
+    return await RepoClient().get_contents(
+        repo, owner, path, hidden, depth
+    )
+
 
 # Commands
+# region
 @app.command()
 def info(
     owner_repo: str = typer.Argument(
@@ -75,7 +83,8 @@ def info(
     ),
 ) -> None:
     owner, repo = _parse_owner_repo(owner_repo, load_config())
-    asyncio.run(_repo_info(owner, repo))
+    with Text.status("Figuring out what this repo is about...", style = "bold white"):
+        asyncio.run(_repo_info(owner, repo))
 
 
 @app.command()
@@ -102,4 +111,26 @@ def readme(
     ),
 ) -> None:
     owner, repo = _parse_owner_repo(owner_repo, load_config())
-    asyncio.run(_get_readme(owner, repo))
+    with Text.status("Finding another README file...", style = "bold white"):
+        asyncio.run(_get_readme(owner, repo))
+
+
+@app.command()
+def contents(
+    owner_repo: str = typer.Argument(
+        None, metavar="OWNER/REPO", help="Default owner/repo, e.g 'JKG-cpu/OctoTrack'"
+    ),
+    path: str = typer.Option(None, "-p", "--path", help="Specify a folder in the repository"),
+    hidden: bool = typer.Option(False, "-h", "--hidden", help="Show hidden files"),
+    ls: bool = typer.Option(False, "-l", "--list", help="List files & folders"),
+    depth: int = typer.Option(3, help="The depth of which to go to."),
+) -> None:
+    owner, repo = _parse_owner_repo(owner_repo, load_config())
+    with Text.status("Fetching Repo Contents...", style = "bold white"):
+        repo_content = asyncio.run(_get_content(
+            owner, repo, path, hidden, depth
+        ))
+    
+    display_contents(repo_content, ls)
+
+# endregion

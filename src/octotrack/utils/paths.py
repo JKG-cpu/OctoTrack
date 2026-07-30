@@ -68,6 +68,12 @@ def remove_paths() -> None:
 
 # Load / Save functions
 def load_config() -> dict:
+    if not CONFIG_SETTINGS_PATH.exists():
+        Text.error(
+            "Data in config file changed or corrupted. Please run 'octotrack setup'"
+        )
+        exit(1)
+
     with open(CONFIG_SETTINGS_PATH, "r") as f:
         data = json.load(f)
 

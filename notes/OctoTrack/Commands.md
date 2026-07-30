@@ -6,7 +6,6 @@
 	- This might be temporary, depending on how I decided to [^3]handle themes
 - [ ] Need to create Pydantic models for the rest of the `octotrack repo` commands + Display models for the rest of the `octotrack repo` commands
 	- [x] `octotrack repo readme <owner/repo>`
-	- [ ] `octotrack repo license <owner/repo>`
 	- [ ] `octotrack repo contents <owner/repo> <path>`
 - [ ] [^2]Publish `v0.1.0`
 ---
@@ -42,13 +41,26 @@ CONFIG_SETTINGS = {
 ```
 ## Repository
 ### Metadata
-| Command                                       | Description                                                              |
-| --------------------------------------------- | ------------------------------------------------------------------------ |
-| `octotrack repo default <owner/repo>`         | Set the default repository and / or owner quickly                        |
-| `octotrack repo info <owner/repo>`            | [^1] General repository information                                      |
-| `octotrack repo contents <owner/repo> <path>` | File / directory contents at a given ref                                 |
-| `octotrack repo readme <owner/repo>`          | Get the repository's README.md                                           |
-| `octotrack repo license <owner/repo>`         | Get the repository's LICENSE                                             |
+| Command                                       | Description                                       |
+| --------------------------------------------- | ------------------------------------------------- |
+| `octotrack repo default <owner/repo>`         | Set the default repository and / or owner quickly |
+| `octotrack repo info <owner/repo>`            | [^1] General repository information               |
+| `octotrack repo contents <owner/repo> <path>` | File / directory contents at a given ref          |
+| `octotrack repo readme <owner/repo>`          | Get the repository's README.md                    |
+
+## Command Details / Layout
+
+`octotrack repo contents <owner/repo> <path>`:
+- `<owner/repo>` will function like the other commands
+- `<path>` will be optional, it will show the top level of the GitHub repository
+-  There will be some sub-commands for seeing less / more files, going through directories easily, max amount of sub folders visible.
+
+Arguments Include:
+- `<path>` *(optional)*
+- `-h` / `--hidden`: Shows hidden files
+- `-l` / `--list`: Shows files in a list format (like `ls -l /dir/`). Defaults to rich output
+- `--depth`: Max amount of folders / files to display. Defaults to 3.
+
 
 [^1]: General Repository Info includes
 	-  Description
