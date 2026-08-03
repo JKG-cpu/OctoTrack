@@ -16,7 +16,7 @@ from .flags import GitHubTokenStatus
 
 __all__ = [
     "ConfigKey",
-    "edit_github_token",
+    "set_github_token",
     "edit_config",
     "show_config",
     "load_github_token",
@@ -52,7 +52,7 @@ def save_github_token(token: str) -> None:
     ENV_PATH.chmod(stat.S_IRUSR | stat.S_IWUSR)
 
 
-def edit_github_token() -> None:
+def set_github_token() -> None:
     Text.text("Enter in your GitHub token: ", style="text.base_text", end="")
     token = getpass("").strip()
 

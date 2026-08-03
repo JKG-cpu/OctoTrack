@@ -32,7 +32,7 @@ Requires Python 3.13+.
 octotrack setup
 
 # Add a GitHub personal access token
-octotrack config edit-token
+octotrack config set-token
 
 # Set a default repo so you don't have to type it every time
 octotrack repo default JKG-cpu/OctoTrack
@@ -62,7 +62,7 @@ Reads and writes local configuration, including your GitHub token.
 | Command | Description |
 |---|---|
 | `octotrack config show` | Prints all current config values. |
-| `octotrack config edit-token` | Prompts for a GitHub token and stores it as a local environment variable. Never written to the config file. |
+| `octotrack config set-token` | Prompts for a GitHub token and stores it as a local environment variable. Never written to the config file. |
 | `octotrack config set <key> <value>` | Sets a config value directly. Valid keys: `default_owner`, `default_repo`, `default_pr_state`, `api_base_url`. |
 | `octotrack config clear [--key/-k <key>]` | Resets a single config key to its default. Omit `--key` to reset the entire config. |
 | `octotrack config path` | Prints the path to the config settings file. |
@@ -93,7 +93,7 @@ Every `repo` command that accepts `owner/repo` will fall back to your configured
 
 OctoTrack stores its config in an OS-appropriate location via [`platformdirs`](https://github.com/tox-dev/platformdirs). Run `octotrack config path` to see the exact file on your system.
 
-Your GitHub token is **never** stored in the config file — it lives exclusively in a local `.env` file managed by `octotrack config edit-token`, and is loaded as an environment variable at runtime.
+Your GitHub token is **never** stored in the config file — it lives exclusively in a local `.env` file managed by `octotrack config set-token`, and is loaded as an environment variable at runtime.
 
 ## License
 

@@ -76,7 +76,7 @@ async def _get_content(
 
 # Commands
 # region
-@app.command()
+@app.command(help="Get repository info")
 def info(
     owner_repo: str = typer.Argument(
         None, metavar="OWNER/REPO", help="e.g 'JKG-cpu/OctoTrack'"
@@ -87,7 +87,7 @@ def info(
         asyncio.run(_repo_info(owner, repo))
 
 
-@app.command()
+@app.command(help="Set the default owner/repo")
 def default(
     owner_repo: str = typer.Argument(
         ..., metavar="OWNER/REPO", help="Default owner/repo, e.g. 'JKG-cpu/OctoTrack'"
@@ -104,7 +104,7 @@ def default(
         edit_config(ConfigKey.default_repo, repo)
 
 
-@app.command()
+@app.command(help="Get a repository's [italic]README.md[/italic]")
 def readme(
     owner_repo: str = typer.Argument(
         None, metavar="OWNER/REPO", help="Default owner/repo, e.g. 'JKG-cpu/OctoTrack'"
@@ -115,7 +115,7 @@ def readme(
         asyncio.run(_get_readme(owner, repo))
 
 
-@app.command()
+@app.command(help="Get the file contents of a repository")
 def contents(
     owner_repo: str = typer.Argument(
         None, metavar="OWNER/REPO", help="Default owner/repo, e.g 'JKG-cpu/OctoTrack'"

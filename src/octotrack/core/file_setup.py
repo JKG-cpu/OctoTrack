@@ -62,7 +62,7 @@ def validate() -> None:
 
             elif token_status == GitHubTokenStatus.TOKEN_NOT_SET:
                 Text.info(
-                    "GitHub token is not set. Please run 'octotrack config edit-token'"
+                    "GitHub token is not set. Please run 'octotrack config set-token'"
                 )
 
     except Exception as e:

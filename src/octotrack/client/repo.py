@@ -38,7 +38,7 @@ class RepoClient:
             "Accept": "application/vnd.github+json",
             "X-GitHub-Api-Version": "2022-11-28",
             "Authorization": f"Bearer {os.environ.get(TOKEN_NAME)}",
-            "User-Agent": "octotrack",
+            "User-Agent": "OctoTrack",
         }
 
     async def _get_content(
