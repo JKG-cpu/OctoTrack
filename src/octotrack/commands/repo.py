@@ -66,12 +66,11 @@ async def _get_readme(owner: str, repo: str) -> None:
         )
     )
 
+
 async def _get_content(
     owner: str, repo: str, path: str, hidden: bool, depth: int
 ) -> list[RepositoryContent]:
-    return await RepoClient().get_contents(
-        repo, owner, path, hidden, depth
-    )
+    return await RepoClient().get_contents(repo, owner, path, hidden, depth)
 
 
 # Commands
@@ -83,7 +82,7 @@ def info(
     ),
 ) -> None:
     owner, repo = _parse_owner_repo(owner_repo, load_config())
-    with Text.status("Figuring out what this repo is about...", style = "bold white"):
+    with Text.status("Figuring out what this repo is about...", style="bold white"):
         asyncio.run(_repo_info(owner, repo))
 
 
@@ -111,7 +110,7 @@ def readme(
     ),
 ) -> None:
     owner, repo = _parse_owner_repo(owner_repo, load_config())
-    with Text.status("Finding another README file...", style = "bold white"):
+    with Text.status("Finding another README file...", style="bold white"):
         asyncio.run(_get_readme(owner, repo))
 
 
@@ -120,17 +119,18 @@ def contents(
     owner_repo: str = typer.Argument(
         None, metavar="OWNER/REPO", help="Default owner/repo, e.g 'JKG-cpu/OctoTrack'"
     ),
-    path: str = typer.Option(None, "-p", "--path", help="Specify a folder in the repository"),
+    path: str = typer.Option(
+        None, "-p", "--path", help="Specify a folder in the repository"
+    ),
     hidden: bool = typer.Option(False, "-h", "--hidden", help="Show hidden files"),
     ls: bool = typer.Option(False, "-l", "--list", help="List files & folders"),
     depth: int = typer.Option(3, help="The depth of which to go to."),
 ) -> None:
     owner, repo = _parse_owner_repo(owner_repo, load_config())
-    with Text.status("Fetching Repo Contents...", style = "bold white"):
-        repo_content = asyncio.run(_get_content(
-            owner, repo, path, hidden, depth
-        ))
-    
+    with Text.status("Fetching Repo Contents...", style="bold white"):
+        repo_content = asyncio.run(_get_content(owner, repo, path, hidden, depth))
+
     display_contents(repo_content, ls)
+
 
 # endregion

@@ -94,9 +94,7 @@ def test_get_readme_decodes_base64_content(repo_client):
     encoded = base64.b64encode(b"# OctoTrack\n\nTrack your repos.").decode("utf-8")
 
     respx.get(f"{API_BASE}/repos/JKG-cpu/OctoTrack/readme").mock(
-        return_value=httpx.Response(
-            200, json={"name": "README.md", "content": encoded}
-        )
+        return_value=httpx.Response(200, json={"name": "README.md", "content": encoded})
     )
 
     response = _run(repo_client.get_readme("OctoTrack", "JKG-cpu"))
@@ -122,7 +120,12 @@ def test_get_contents_skips_hidden_files_by_default(repo_client):
             200,
             json=[
                 {"name": "README.md", "path": "README.md", "size": 100, "type": "file"},
-                {"name": ".gitignore", "path": ".gitignore", "size": 20, "type": "file"},
+                {
+                    "name": ".gitignore",
+                    "path": ".gitignore",
+                    "size": 20,
+                    "type": "file",
+                },
             ],
         )
     )
@@ -143,7 +146,12 @@ def test_get_contents_includes_hidden_files_when_requested(repo_client):
             200,
             json=[
                 {"name": "README.md", "path": "README.md", "size": 100, "type": "file"},
-                {"name": ".gitignore", "path": ".gitignore", "size": 20, "type": "file"},
+                {
+                    "name": ".gitignore",
+                    "path": ".gitignore",
+                    "size": 20,
+                    "type": "file",
+                },
             ],
         )
     )

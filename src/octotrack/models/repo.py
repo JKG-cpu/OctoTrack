@@ -17,7 +17,7 @@ class RepositoryContent(BaseModel):
     path: str
     size: int
     type: str
-    content: list['RepositoryContent'] | None = None
+    content: list["RepositoryContent"] | None = None
 
 
 class RepositoryOwner(BaseModel):

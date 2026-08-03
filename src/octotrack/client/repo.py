@@ -58,9 +58,9 @@ class RepoClient:
                 n_item.content = await self._get_content(
                     owner, repo, n_item.path, hidden, depth - 1
                 )
-            
+
             content.append(n_item)
-        
+
         return content
 
     # Base Get Method
@@ -113,20 +113,24 @@ class RepoClient:
                 exit(1)
 
             owner = self.config["default_owner"]
-    
+
         elif depth < 0:
             Text.error("--depth cannot be less than 0")
             exit(1)
-        
+
         content: list[RepositoryContent] = []
 
-        response =  await self._get(f"/repos/{owner}/{repo}/contents/{path}" if path else f"/repos/{owner}/{repo}/contents/")
+        response = await self._get(
+            f"/repos/{owner}/{repo}/contents/{path}"
+            if path
+            else f"/repos/{owner}/{repo}/contents/"
+        )
         json: list[dict] = response.json()
 
         for item in json:
             try:
                 n_item = RepositoryContent.model_validate(item)
-        
+
             except ValidationError:
                 Text.error("Invalid file path (Check filename?).")
                 exit(1)
@@ -138,7 +142,7 @@ class RepoClient:
                 n_item.content = await self._get_content(
                     owner, repo, n_item.path, hidden, depth - 1
                 )
-            
+
             content.append(n_item)
 
         return content

@@ -21,6 +21,7 @@ __all__ = [
     "show_config",
     "load_github_token",
     "clear",
+    "github_token_help",
 ]
 
 
@@ -96,6 +97,37 @@ def clear(key: ConfigKey | None) -> None:
         save_config(CONFIG_SETTINGS)
 
     Text.info("Change successful.")
+
+
+# endregion
+
+
+# Config Help
+# region
+
+
+def github_token_help() -> None:
+    Text.text(
+        "You'll need a GitHub personal access token to use OctoTrack — "
+        "here's a quick rundown of how to get one.",
+        style="bold white",
+    )
+
+    Text.text(
+        "\n1. Go to GitHub's token settings page (linked below) and click "
+        "'Generate new token'.\n"
+        "2. Choose 'Fine-grained token' (recommended) or 'Token (classic)'.\n"
+        "3. Give it a name, an expiration, and at minimum 'repo' read access "
+        "for the repositories you want to track.\n"
+        "4. Copy the generated token — GitHub only shows it once.\n"
+        "5. Run [bold]octotrack config edit-token[/bold] and paste it in when prompted.",
+        style="white",
+    )
+
+    Text.text("\nMore Info: ", style="bold white", end="")
+    Text.info(
+        "[link=https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens]How to create a GitHub Token[/link]\n"
+    )
 
 
 # endregion

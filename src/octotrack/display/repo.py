@@ -46,7 +46,9 @@ def _display_ls(repo_contents: list[RepositoryContent]) -> None:
             name_style = "repo.title" if item.type == "dir" else "value"
 
             name_text = Text("  " * depth, style="bold")
-            name_text.append(item.name if item.type != "dir" else f"{item.name}/", style=name_style)
+            name_text.append(
+                item.name if item.type != "dir" else f"{item.name}/", style=name_style
+            )
 
             table.add_row(indicator, size_str, name_text)
             if item.type == "dir" and item.content:

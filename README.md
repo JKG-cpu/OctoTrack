@@ -66,6 +66,7 @@ Reads and writes local configuration, including your GitHub token.
 | `octotrack config set <key> <value>` | Sets a config value directly. Valid keys: `default_owner`, `default_repo`, `default_pr_state`, `api_base_url`. |
 | `octotrack config clear [--key/-k <key>]` | Resets a single config key to its default. Omit `--key` to reset the entire config. |
 | `octotrack config path` | Prints the path to the config settings file. |
+| `octotrack config github-token-help` | An explanation on how to create a GitHub Authentication Token |
 
 ### `repo`
 

@@ -1,6 +1,13 @@
 import typer
 
-from ..core import ConfigKey, edit_config, show_config, set_github_token, clear
+from ..core import (
+    ConfigKey,
+    edit_config,
+    show_config,
+    set_github_token,
+    clear,
+    github_token_help,
+)
 from ..utils import Text, CONFIG_SETTINGS_PATH
 
 __all__ = ["app"]
@@ -18,9 +25,12 @@ def set_token() -> None:
     set_github_token()
 
 
-@app.command(name="githubtoken-help", help="An explanation on how to create a GitHub Authentication Token")
+@app.command(
+    name="github-token-help",
+    help="An explanation on how to create a GitHub Authentication Token",
+)
 def show_help() -> None:
-    pass
+    github_token_help()
 
 
 @app.command(name="set", help="Set a config value")
