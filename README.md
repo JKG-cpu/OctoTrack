@@ -12,6 +12,7 @@ OctoTrack talks directly to the [GitHub REST API](https://docs.github.com/en/res
   - [`setup`](#setup)
   - [`config`](#config)
   - [`repo`](#repo)
+  - [`commits`](#commits)
 - [Configuration](#configuration)
 - [License](#license)
 
@@ -89,6 +90,20 @@ Fetches and displays information about a GitHub repository.
 | `--depth <int>` | How many levels deep to recurse into subdirectories (default: `3`). |
 
 Every `repo` command that accepts `owner/repo` will fall back to your configured default (set via `octotrack repo default`) for whichever part — owner, repo, or both — you omit.
+
+### `commits`
+
+Get the commits for a repository
+
+| Command | Description |
+|---|---|
+| `octotrack commits [owner/repo]` | Shows the commits for the current repository |
+
+| Flag | Description |
+|---|---|
+| `-a, --all` | List every single commit |
+
+Every `commits` command that accepts `owner/repo` will fall back to your configured default (set via `octotrack repo default`) for whichever part - owner, repo, or both - you omit.
 
 ## Configuration
 

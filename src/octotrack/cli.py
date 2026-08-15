@@ -1,6 +1,6 @@
 import typer
 
-from .commands import setup_app, config_app, repo_app
+from .commands import setup_app, config_app, repo_app, commit_app
 
 __all__ = ["app"]
 
@@ -8,3 +8,4 @@ app = typer.Typer()
 app.add_typer(setup_app, name="setup")
 app.add_typer(config_app, name="config", help="Run config commands")
 app.add_typer(repo_app, name="repo", help="Run repository related commands")
+app.add_typer(commit_app, name="commits", help="Get the commits for a repository")

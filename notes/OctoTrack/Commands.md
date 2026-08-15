@@ -10,10 +10,25 @@
 - [x] Run a few tests (configured by Claude)
 - [x] [^2]Publish `v0.1.0`
 ---
-- [ ] Start creating commands (structure) for commits, branches & tags, releases, issues, and pull requests
-- [ ] Create models for commits, branches & tags, releases, issues, and pull requests
-- [ ] Display models for commits, branches & tags, releases, issues, and pull requests
-- [ ] [^2]Publish `v0.2.0`
+- [ ] Start creating commands (structure) for 
+	- [x] Commits
+	- [ ] Branches & Tags
+	- [ ] Releases
+	- [ ] Issues
+	- [ ] Pull Requests
+- [ ] Create models for 
+	- [x] Commits
+	- [ ] Branches & Tags
+	- [ ] Releases
+	- [ ] Issues
+	- [ ] Pull Requests
+- [ ] Display models for 
+	- [x] Commits
+	- [ ] Branches & Tags
+	- [ ] Releases
+	- [ ] Issues
+	- [ ] Pull Requests
+- [ ] [^2]Publish `v0.3.0`
 
 ## Setup
 
@@ -62,6 +77,12 @@ Arguments Include:
 - `-l` / `--list`: Shows files in a list format (like `ls -l /dir/`). Defaults to rich output
 - `--depth`: Max amount of folders / files to display. Defaults to 3.
 
+## Commits
+| Command                               | Description                                 |
+| ------------------------------------- | ------------------------------------------- |
+| `octotrack commits show <owner/repo>` | Show commits for the current `<owner/repo>` |
+Arguments Include:
+- `-a` / `--all`: Show all the commits in the repository
 
 [^1]: General Repository Info includes
 	-  Description
@@ -84,4 +105,4 @@ Arguments Include:
 	4. Create / update a workflow (for when a tag is created + pushed)
 	5. ***PUSH*** workflow first, ***THEN*** tag it and push
 
-[^3]: Changing themes / colors will be implemented in a different version, not `v0.1.0` or `v0.2.0`. Maybe `v0.3.0`.
+[^3]: Changing themes / colors will be implemented in a different version, not `v0.1.0` or `v0.2.0` or `v0.3.0`. Maybe `v0.5.0+`.
