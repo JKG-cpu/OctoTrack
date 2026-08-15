@@ -4,33 +4,12 @@ import base64
 
 from ..client import RepoClient
 from ..core import ConfigKey, edit_config
-from ..utils import load_config, Text
+from ..utils import load_config, Text, _parse_owner_repo
 from ..models import RepositoryInfo, RepositoryReadme, RepositoryContent
 from ..display import RepoInfoRenderer, display_readme, display_contents
 
 
 app = typer.Typer()
-
-
-# Helpers
-def _parse_owner_repo(value: str | None, config: dict) -> tuple[str, str]:
-    if value and "/" in value:
-        return tuple(value.split("/", 1))
-
-    owner = config["default_owner"]
-    repo = value or config["default_repo"]
-
-    if not owner:
-        Text.error(
-            "Specify 'owner/repo' OR set a default with 'octotrack repo default <owner/repo>'"
-        )
-        raise typer.Exit(1)
-
-    if not repo:
-        Text.error("Provide a repo, e.g 'octotrack repo info JKG-cpu/OctoTrack'")
-        raise typer.Exit(1)
-
-    return owner, repo
 
 
 # Async Methods

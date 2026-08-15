@@ -1,3 +1,4 @@
+import typer
 from rich.console import Console
 from rich.progress import Progress
 from rich.status import Status
@@ -5,7 +6,7 @@ from rich.status import Status
 from .theme import OCTOTRACK_THEME
 
 
-__all__ = ["CHECKMARK", "TOKEN_NAME", "CONFIG_SETTINGS", "_console", "Text"]
+__all__ = ["CHECKMARK", "TOKEN_NAME", "CONFIG_SETTINGS", "_console", "Text", "_parse_owner_repo"]
 
 
 # ASCII Characters
@@ -60,3 +61,22 @@ class Text:
     @staticmethod
     def status(text: str, style: str) -> Status:
         return _console.status(f"[{style}]{text}[/{style}]")
+
+def _parse_owner_repo(value: str | None, config: dict) -> tuple[str, str]:
+    if value and "/" in value:
+        return tuple(value.split("/", 1))
+
+    owner = config["default_owner"]
+    repo = value or config["default_repo"]
+
+    if not owner:
+        Text.error(
+            "Specify 'owner/repo' OR set a default with 'octotrack repo default <owner/repo>'"
+        )
+        raise typer.Exit(1)
+
+    if not repo:
+        Text.error("Provide a repo, e.g 'octotrack repo info JKG-cpu/OctoTrack'")
+        raise typer.Exit(1)
+
+    return owner, repo
