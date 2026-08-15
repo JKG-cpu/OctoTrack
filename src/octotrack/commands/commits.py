@@ -14,8 +14,9 @@ async def _run(owner: str, repo: str, show_all: bool):
     commits: list[Commit] = [Commit.model_validate(commit_json) for commit_json in rep.json()]
     display_commits(commits, show_all)
 
-@app.command()
-def show(
+@app.callback(invoke_without_command=True)
+def main(
+    ctx: typer.Context,
     owner_repo: str = typer.Argument(
         None, metavar="OWNER/REPO", help="e.g 'JKG-cpu/OctoTrack'"
     ),
@@ -23,5 +24,6 @@ def show(
         False, "-a", "--all", help="Show all the commits for this repository."
     )
 ) -> None:
-    owner, repo = _parse_owner_repo(owner_repo, load_config())
-    asyncio.run(_run(owner, repo, show_all))
+    if ctx.invoked_subcommand is None:
+        owner, repo = _parse_owner_repo(owner_repo, load_config())
+        asyncio.run(_run(owner, repo, show_all))

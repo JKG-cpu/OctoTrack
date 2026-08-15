@@ -28,7 +28,7 @@
 	- [ ] Releases
 	- [ ] Issues
 	- [ ] Pull Requests
-- [ ] [^2]Publish `v0.2.0`
+- [ ] [^2]Publish `v0.3.0`
 
 ## Setup
 
@@ -105,4 +105,4 @@ Arguments Include:
 	4. Create / update a workflow (for when a tag is created + pushed)
 	5. ***PUSH*** workflow first, ***THEN*** tag it and push
 
-[^3]: Changing themes / colors will be implemented in a different version, not `v0.1.0` or `v0.2.0`. Maybe `v0.3.0`.
+[^3]: Changing themes / colors will be implemented in a different version, not `v0.1.0` or `v0.2.0` or `v0.3.0`. Maybe `v0.5.0+`.
