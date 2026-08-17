@@ -1,35 +1,5 @@
 > Base command: `octotrack`
 
-## Todos
-- [x] Create Pydantic models for `octotrack repo info`
-- [x] Create a display for models when commands like `octotrack repo info` are used
-	- This might be temporary, depending on how I decided to [^3]handle themes
-- [x] Need to create Pydantic models for the rest of the `octotrack repo` commands + Display models for the rest of the `octotrack repo` commands
-	- [x] `octotrack repo readme <owner/repo>`
-	- [x] `octotrack repo contents <owner/repo> <path>`
-- [x] Run a few tests (configured by Claude)
-- [x] [^2]Publish `v0.1.0`
----
-- [ ] Start creating commands (structure) for 
-	- [x] Commits
-	- [ ] Branches & Tags
-	- [ ] Releases
-	- [ ] Issues
-	- [ ] Pull Requests
-- [ ] Create models for 
-	- [x] Commits
-	- [ ] Branches & Tags
-	- [ ] Releases
-	- [ ] Issues
-	- [ ] Pull Requests
-- [ ] Display models for 
-	- [x] Commits
-	- [ ] Branches & Tags
-	- [ ] Releases
-	- [ ] Issues
-	- [ ] Pull Requests
-- [ ] [^2]Publish `v0.3.0`
-
 ## Setup
 
 | Command                    | Description                 |
@@ -56,7 +26,8 @@ CONFIG_SETTINGS = {
 }
 ```
 ## Repository
-### Metadata
+### Repo
+
 | Command                                       | Description                                       |
 | --------------------------------------------- | ------------------------------------------------- |
 | `octotrack repo default <owner/repo>`         | Set the default repository and / or owner quickly |
@@ -84,6 +55,8 @@ Arguments Include:
 Arguments Include:
 - `-a` / `--all`: Show all the commits in the repository
 
+
+
 [^1]: General Repository Info includes
 	-  Description
 	-  Default Branch
@@ -97,12 +70,3 @@ Arguments Include:
 	-  Pushed at
 	-  License (if available)
 	-  Read me (if available)
-
-[^2]: Need to update / create the things listed below
-	1. Update project `README.md`
-	2. Updated `pyproject.toml`
-	3. Create / update `requirements.txt`
-	4. Create / update a workflow (for when a tag is created + pushed)
-	5. ***PUSH*** workflow first, ***THEN*** tag it and push
-
-[^3]: Changing themes / colors will be implemented in a different version, not `v0.1.0` or `v0.2.0` or `v0.3.0`. Maybe `v0.5.0+`.
