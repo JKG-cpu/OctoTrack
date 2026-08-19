@@ -71,4 +71,4 @@ Not all people use CLI Tools comfortably, to create a Textual TUI Interface to a
 
 [^2]: Changing themes / colors will be implemented in a different version, not `v0.1.0` or `v0.2.0` or `v0.3.0`. Maybe `v0.5.0+`.
 
-[^3]: Figure out how that works...
+[^3]: Create pages with MkDocs
