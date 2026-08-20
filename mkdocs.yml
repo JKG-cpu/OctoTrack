@@ -15,10 +15,17 @@ theme:
         name: Switch to dark mode
   features:
     - search.suggest
-    - navigation.tabs
+    - navigation.expand
 
 extra_css:
   - stylesheets/extra.css
 
 nav:
   - Home: index.md
+  - Quick Start: quickstart.md
+  - GitHub Auth Token: authtoken.md
+  # - Commands:
+  #   - Setup: commands/setup.md
+  #   - Config: commands/config.md
+  #   - Repository: commands/repo.md
+  #   - Commits: commands/commits.md

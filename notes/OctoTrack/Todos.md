@@ -56,11 +56,11 @@ Not all people use CLI Tools comfortably, to create a Textual TUI Interface to a
 - [ ] Create a Textual Interface so that OctoTrack could be used as a CLI tool AND a CLI App
 
 # Overall Todo's
-- [ ] Start creating documentation for OctoTrack explaining
-	- What it is
-	- How to use it
-	- How to set up OctoTrack
-- [ ] [^3]Deploy to GitHub pages???
+- [x] Start creating documentation for OctoTrack explaining
+	- [x] What it is
+	- [x] How to use it
+	- [x] How to set up OctoTrack
+- [x] [^3]Deploy to GitHub pages???
 
 [^1]: Need to update / create the things listed below
 	1. Update project `README.md`
@@ -71,4 +71,4 @@ Not all people use CLI Tools comfortably, to create a Textual TUI Interface to a
 
 [^2]: Changing themes / colors will be implemented in a different version, not `v0.1.0` or `v0.2.0` or `v0.3.0`. Maybe `v0.5.0+`.
 
-[^3]: Create pages with MkDocs
+[^3]: Create pages with MkDocs + Create a workflow
