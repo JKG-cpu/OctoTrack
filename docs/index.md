@@ -1,5 +1,7 @@
 # OctoTrack
 
+![OctoTrack](images/octotrack_banner.png)
+
 An async CLI client for the GitHub API — track commits, pull requests, issues, releases, and repository activity straight from your terminal, with concurrent lookups so nothing feels slow.
 
 ## Quick Install
