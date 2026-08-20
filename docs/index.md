@@ -12,22 +12,51 @@ pip install octotrack
 
 Requires Python 3.13+.
 
-## Get Started in 30 Seconds
+## Quick Start
+
+Run the OctoTrack setup command
 
 ```bash
-octotrack repo info JKG-cpu/OctoTrack
+octotrack setup
 ```
 
-![octotrack repo info JKG-cpu/OctoTrack](gifs/octotrack_repo_info.gif)
+This sets up all the important files for OctoTrack. For a brand new setup, you will still have to create / add a [GitHub Auth Token](authtoken.md).
 
-That's it — no config files to write, just point it at any public repo.
+If you ever decide to uninstall octotrack, or you think the configuration is messed up, you can run these two commands.
 
-## What It Does
+```bash
+octotrack setup remove # Remove the OctoTrack Setup
+```
 
-- **Repo status** — stars, forks, visibility, and metadata at a glance
-- **Commits** — recent activity with author, date, and message
+```bash
+octotrack setup validate # Validate the current OctoTrack setup
+```
 
-More features will be added soon!
+After the setup is complete, you can head over to [Running Your First Command](commands/first_command.md) to start using OctoTrack!
+
+## Current Features
+
+??? "Current OctoTrack Commands"
+    ??? "Repository Information"
+        - Description
+        - Default Branch
+        - Visibility
+        - Size
+        - Stars / forks / watchers counts
+        - Homepage
+        - Archived
+        - Created at
+        - Updated at
+        - Pushed at
+        - License *(if available)*
+        - Read me *(if available)*
+
+    * **Repository Content (Files and Folders)**
+    * **Repository README**
+        
+    * **Repository Commits + Commit Messages**
+
+    ***More commands will be added soon!***
 
 ## More Info
 

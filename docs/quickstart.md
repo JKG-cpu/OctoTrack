@@ -1,24 +1,10 @@
 # Quick Start
 
-## Installation
-
-Before using OctoTrack, you need to download it. The easiest way is via pip
-
-```bash
-pip install octotrack
-```
-
-*Requires Python 3.13+.*
-
-## Setup your token
-
-Before you can use OctoTrack, you need to set your GitHub Auth Token.
-
-View [Get a GitHub Auth Token](authtoken.md) to setup a token.
-
 ## Running your first command
 
-You can view the stats of my repo by running the command below!
+After you complete the [OctoTrack Setup](setup.md), you can run your first OctoTrack command!
+
+Run this command to view the current stats of my repository!
 
 ```bash
 octotrack repo info JKG-cpu/OctoTrack
@@ -26,7 +12,7 @@ octotrack repo info JKG-cpu/OctoTrack
 
 ![octotrack repo info JKG-cpu/OctoTrack](gifs/octotrack_repo_info.gif)
 
-Other than that, run this command to see all the current commands in OctoTrack.
+Other than that, run this command to see all the current commands in OctoTrack or look around the documentation, every OctoTrack command category will be included with an explanation on how to use it.
 ```bash
 octotrack --help
 ```

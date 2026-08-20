@@ -20,10 +20,18 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
 nav:
   - Home: index.md
   - Quick Start: quickstart.md
   - GitHub Auth Token: authtoken.md
+  - OctoTrack Setup: setup.md
+  - Commands:
+    - Running Your First Command: commands/first_command.md
   # - Commands:
   #   - Setup: commands/setup.md
   #   - Config: commands/config.md

@@ -61,6 +61,11 @@ Not all people use CLI Tools comfortably, to create a Textual TUI Interface to a
 	- [x] How to use it
 	- [x] How to set up OctoTrack
 - [x] [^3]Deploy to GitHub pages???
+- [ ] Need to add more details to documentation, including
+	- [ ] Each Command
+	- [ ] Installation
+	- [ ] Quick Start
+	- [ ] GitHub Auth Token
 
 [^1]: Need to update / create the things listed below
 	1. Update project `README.md`
