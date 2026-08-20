@@ -1,6 +1,6 @@
 [project]
 name = "OctoTrack"
-version = "0.3.1"
+version = "0.3.2"
 description = "An Async CLI Client for GitHub that can be used to track different things on GitHub per repository."
 readme = "README.md"
 authors = [
