@@ -2,13 +2,13 @@ import typer
 
 from ..core import (
     ConfigKey,
-    edit_config,
-    show_config,
-    set_github_token,
     clear,
+    edit_config,
     github_token_help,
+    set_github_token,
+    show_config,
 )
-from ..utils import Text, CONFIG_SETTINGS_PATH
+from ..utils import CONFIG_SETTINGS_PATH, Text
 
 __all__ = ["app"]
 

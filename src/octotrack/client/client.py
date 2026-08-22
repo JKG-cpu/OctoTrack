@@ -1,16 +1,17 @@
-import httpx
 import os
+import sys
+
+import httpx
 from pydantic import ValidationError
 
-from ..utils import load_config, Text, TOKEN_NAME
-from ..core import load_github_token, GitHubTokenStatus
+from ..core import GitHubTokenStatus, load_github_token
 from ..models import RepositoryContent
+from ..utils import TOKEN_NAME, Text, load_config
+
+__all__ = ["Client"]
 
 
-__all__ = ["RepoClient"]
-
-
-class RepoClient:
+class Client:
     def __init__(self) -> None:
         self._load_token()
         self.config: dict = load_config()
@@ -19,19 +20,20 @@ class RepoClient:
             base_url=self.config["api_base_url"], headers=self._load_headers()
         )
 
+    # Helpers
     def _load_token(self) -> None:
         status = load_github_token()
 
         if status == GitHubTokenStatus.INVALID_PATH:
             Text.error("Not all paths exist... some may have been moved or deleted.")
             Text.info("Please run 'octotrack setup' to complete the path setup.")
-            exit(1)
+            sys.exit(1)
 
         elif status == GitHubTokenStatus.TOKEN_NOT_SET:
             Text.warning(
                 "[!] GitHub token not set. Run 'octotrack config set-token' to set a GitHub Auth Token."
             )
-            exit(1)
+            sys.exit(1)
 
     def _load_headers(self) -> dict:
         return {
@@ -41,6 +43,23 @@ class RepoClient:
             "User-Agent": "OctoTrack",
         }
 
+    # Base Get Method
+    async def _get(self, path: str, **params) -> httpx.Response:
+        response = await self.client.get(path, params=params)
+
+        self.rate_remaining = int(response.headers.get("x-ratelimit-remaining", 0))
+        self.rate_reset = int(response.headers.get("x-ratelimit-reset", 0))
+
+        try:
+            response.raise_for_status()
+        except httpx.HTTPStatusError as e:
+            Text.error(f"Error when getting path: {path}. Error: \n{e}")
+            sys.exit(1)
+
+        return response
+
+    # Repo
+    # region
     async def _get_content(
         self, owner: str, repo: str, path: str, hidden: bool, depth: int
     ) -> list[RepositoryContent]:
@@ -63,28 +82,13 @@ class RepoClient:
 
         return content
 
-    # Base Get Method
-    async def _get(self, path: str, **params) -> httpx.Response:
-        response = await self.client.get(path, params=params)
-
-        self.rate_remaining = int(response.headers.get("x-ratelimit-remaining", 0))
-        self.rate_reset = int(response.headers.get("x-ratelimit-reset", 0))
-
-        try:
-            response.raise_for_status()
-        except httpx.HTTPStatusError as e:
-            Text.error(f"Error when getting path: {path}. Error: \n{e}")
-            exit(1)
-
-        return response
-
     async def get_repo(self, repo: str, owner: str | None) -> httpx.Response:
         if not owner:
             if not self.config["default_owner"]:
                 Text.error(
                     "You must specify a user OR set a default user with 'octotrack config set default_owner OWNERNAME' or 'octotrack repo default <owner/repo>"
                 )
-                exit(1)
+                sys.exit(1)
 
             owner = self.config["default_owner"]
 
@@ -96,7 +100,7 @@ class RepoClient:
                 Text.error(
                     "You must specify a user OR set a default user with 'octotrack config set default_owner OWNERNAME' or 'octotrack repo default <owner/repo>"
                 )
-                exit(1)
+                sys.exit(1)
 
             owner = self.config["default_owner"]
 
@@ -110,13 +114,13 @@ class RepoClient:
                 Text.error(
                     "You must specify a user OR set a default user with 'octotrack config set default_owner OWNERNAME' or 'octotrack repo default <owner/repo>"
                 )
-                exit(1)
+                sys.exit(1)
 
             owner = self.config["default_owner"]
 
         elif depth < 0:
             Text.error("--depth cannot be less than 0")
-            exit(1)
+            sys.exit(1)
 
         content: list[RepositoryContent] = []
 
@@ -133,7 +137,7 @@ class RepoClient:
 
             except ValidationError:
                 Text.error("Invalid file path (Check filename?).")
-                exit(1)
+                sys.exit(1)
 
             if not hidden and n_item.name.startswith("."):
                 continue
@@ -146,3 +150,40 @@ class RepoClient:
             content.append(n_item)
 
         return content
+
+    # Commits
+    async def get_commit(
+        self, owner: str, repo: str, commit: str | None = None
+    ) -> httpx.Response:
+        response = await self._get(
+            f"repos/{owner}/{repo}/commits/{commit}"
+            if commit
+            else f"repos/{owner}/{repo}/commits"
+        )
+
+        return response
+
+    # endregion
+
+    # Branches
+    # region
+    async def get_branches(self, owner: str, repo: str) -> httpx.Response:
+        response = await self._get(f"repos/{owner}/{repo}/branches")
+
+        return response
+
+    async def get_branch(self, owner: str, repo: str, branch: str) -> httpx.Response:
+        response = await self._get(f"repos/{owner}/{repo}/branches/{branch}")
+
+        return response
+
+    # endregion
+
+    # Tags
+    # region
+    async def get_tags(self, owner: str, repo: str) -> httpx.Response:
+        response = await self._get(f"repos/{owner}/{repo}/tags")
+
+        return response
+
+    # endregion

@@ -1,20 +1,22 @@
 import json
-from platformdirs import user_data_dir, user_config_dir
+import sys
 from pathlib import Path
 from shutil import rmtree
+
+from platformdirs import user_config_dir, user_data_dir
 
 from .global_vars import CONFIG_SETTINGS, Text
 
 __all__ = [
     "CONFIG_DIR",
+    "CONFIG_SETTINGS_PATH",
     "DATA_DIR",
     "ENV_PATH",
-    "CONFIG_SETTINGS_PATH",
+    "load_config",
+    "remove_paths",
+    "save_config",
     "setup_paths",
     "validate_paths",
-    "remove_paths",
-    "load_config",
-    "save_config",
 ]
 
 APP_NAME = "OctoTrack"
@@ -72,7 +74,7 @@ def load_config() -> dict:
         Text.error(
             "Data in config file changed or corrupted. Please run 'octotrack setup'"
         )
-        exit(1)
+        sys.exit(1)
 
     with open(CONFIG_SETTINGS_PATH, "r") as f:
         data = json.load(f)
@@ -81,7 +83,7 @@ def load_config() -> dict:
         Text.error(
             "Data in config file changed or corrupted. Please run 'octotrack setup'"
         )
-        exit(1)
+        sys.exit(1)
 
     return data
 

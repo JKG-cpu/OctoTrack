@@ -1,8 +1,8 @@
-from pydantic import BaseModel
 from datetime import datetime
 
+from pydantic import BaseModel
 
-__all__ = ["CommitAuthor", "CommitTree", "CommitDetails", "Commit"]
+__all__ = ["Commit", "CommitAuthor", "CommitDetails", "CommitTree"]
 
 
 class CommitAuthor(BaseModel):

@@ -1,7 +1,11 @@
+from .config_handler import *
 from .file_setup import (
-    setup as stp,
-    validate as val,
     remove as rm,
 )
-from .config_handler import *
+from .file_setup import (
+    setup as stp,
+)
+from .file_setup import (
+    validate as val,
+)
 from .flags import *

@@ -2,26 +2,27 @@ import os
 import stat
 from enum import Enum
 from getpass import getpass
+
 from dotenv import load_dotenv
 
 from ..utils import (
-    Text,
-    TOKEN_NAME,
+    CONFIG_SETTINGS,
     ENV_PATH,
+    TOKEN_NAME,
+    Text,
     load_config,
     save_config,
-    CONFIG_SETTINGS,
 )
 from .flags import GitHubTokenStatus
 
 __all__ = [
     "ConfigKey",
-    "set_github_token",
-    "edit_config",
-    "show_config",
-    "load_github_token",
     "clear",
+    "edit_config",
     "github_token_help",
+    "load_github_token",
+    "set_github_token",
+    "show_config",
 ]
 
 
@@ -107,9 +108,13 @@ def clear(key: ConfigKey | None) -> None:
 
 
 def github_token_help() -> None:
-    Text.info("Click the link below to see how you can create a GitHub Auth Token (THIS MAY BE REMOVED IN THE FUTURE)")
+    Text.info(
+        "Click the link below to see how you can create a GitHub Auth Token (THIS MAY BE REMOVED IN THE FUTURE)"
+    )
 
-    Text.info("[link=https://jkg-cpu.github.io/OctoTrack/authtoken/]Get a GitHub Auth Token[/link]")
+    Text.info(
+        "[link=https://jkg-cpu.github.io/OctoTrack/authtoken/]Get a GitHub Auth Token[/link]"
+    )
 
 
 # endregion
