@@ -5,8 +5,14 @@ from rich.status import Status
 
 from .theme import OCTOTRACK_THEME
 
-
-__all__ = ["CHECKMARK", "TOKEN_NAME", "CONFIG_SETTINGS", "_console", "Text", "_parse_owner_repo"]
+__all__ = [
+    "CHECKMARK",
+    "CONFIG_SETTINGS",
+    "TOKEN_NAME",
+    "Text",
+    "_console",
+    "_parse_owner_repo",
+]
 
 
 # ASCII Characters
@@ -61,6 +67,7 @@ class Text:
     @staticmethod
     def status(text: str, style: str) -> Status:
         return _console.status(f"[{style}]{text}[/{style}]")
+
 
 def _parse_owner_repo(value: str | None, config: dict) -> tuple[str, str]:
     if value and "/" in value:

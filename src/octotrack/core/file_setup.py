@@ -1,18 +1,18 @@
 from pathlib import Path
 
-from .flags import GitHubTokenStatus
-from .config_handler import load_github_token
 from ..utils import (
+    CONFIG_DIR,
+    DATA_DIR,
     Text,
+    load_config,
+    remove_paths,
     setup_paths,
     validate_paths,
-    remove_paths,
-    load_config,
-    DATA_DIR,
-    CONFIG_DIR,
 )
+from .config_handler import load_github_token
+from .flags import GitHubTokenStatus
 
-__all__ = ["setup", "validate", "remove"]
+__all__ = ["remove", "setup", "validate"]
 
 
 def setup() -> None:

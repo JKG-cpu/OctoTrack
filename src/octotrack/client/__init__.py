@@ -1,2 +1,1 @@
-from .repo import RepoClient
-from .commits import CommitClient
+from .client import Client

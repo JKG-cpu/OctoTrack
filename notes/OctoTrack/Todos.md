@@ -32,12 +32,14 @@ Have octotrack do basic things like setting up data + config and getting things 
 Also include commands that are in other CLI tools, i.e. seeing what version your current tool is + add a help section, maybe with links to documentation???
 
 - [ ] Start creating commands (structure) and models for 
-	- [ ] Branches & Tags
+	- [x] Branches 
+	- [x] Tags
 	- [ ] Releases
 	- [ ] Issues
 	- [ ] Pull Requests
 - [ ] Display models for
-	- [ ] Branches & Tags
+	- [x] Branches 
+	- [x] Tags
 	- [ ] Releases
 	- [ ] Issues
 	- [ ] Pull Requests
@@ -66,6 +68,7 @@ Not all people use CLI Tools comfortably, to create a Textual TUI Interface to a
 	- [ ] Installation
 	- [ ] Quick Start
 	- [ ] GitHub Auth Token
+- [ ] Maybe add better errors, specifically for invalid urls
 
 [^1]: Need to update / create the things listed below
 	1. Update project `README.md`

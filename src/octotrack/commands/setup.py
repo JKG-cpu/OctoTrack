@@ -1,7 +1,6 @@
 import typer
 
-from ..core import stp, val, rm
-
+from ..core import rm, stp, val
 
 __all__ = ["app"]
 

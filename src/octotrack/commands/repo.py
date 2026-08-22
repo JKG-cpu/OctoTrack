@@ -1,20 +1,21 @@
-import typer
 import asyncio
 import base64
 
-from ..client import RepoClient
-from ..core import ConfigKey, edit_config
-from ..utils import load_config, Text, _parse_owner_repo
-from ..models import RepositoryInfo, RepositoryReadme, RepositoryContent
-from ..display import RepoInfoRenderer, display_readme, display_contents
+import typer
 
+from ..client import Client
+from ..core import ConfigKey, edit_config
+from ..display import DisplayManager, RepoInfoRenderer
+from ..models import RepositoryContent, RepositoryInfo, RepositoryReadme
+from ..utils import Text, _parse_owner_repo, load_config
 
 app = typer.Typer()
 
 
 # Async Methods
 async def _repo_info(owner: str, repo: str) -> None:
-    client = RepoClient()
+    client = Client()
+
     base = await client.get_repo(repo, owner)
     readme = await client.get_readme(repo, owner)
 
@@ -32,14 +33,15 @@ async def _repo_info(owner: str, repo: str) -> None:
 
 
 async def _get_readme(owner: str, repo: str) -> None:
-    client = RepoClient()
+    client = Client()
+    d = DisplayManager()
 
     response = await client.get_readme(repo, owner)
 
     raw_bytes = base64.b64decode(response.json()["content"])
     readme_text = raw_bytes.decode("utf-8")
 
-    display_readme(
+    d.display_readme(
         RepositoryReadme.model_validate(
             {"content": readme_text, "name": response.json()["name"]}
         )
@@ -49,7 +51,7 @@ async def _get_readme(owner: str, repo: str) -> None:
 async def _get_content(
     owner: str, repo: str, path: str, hidden: bool, depth: int
 ) -> list[RepositoryContent]:
-    return await RepoClient().get_contents(repo, owner, path, hidden, depth)
+    return await Client().get_contents(repo, owner, path, hidden, depth)
 
 
 # Commands
@@ -109,7 +111,8 @@ def contents(
     with Text.status("Fetching Repo Contents...", style="bold white"):
         repo_content = asyncio.run(_get_content(owner, repo, path, hidden, depth))
 
-    display_contents(repo_content, ls)
+    d = DisplayManager()
+    d.display_contents(repo_content, ls)
 
 
 # endregion

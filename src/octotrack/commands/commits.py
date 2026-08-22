@@ -1,18 +1,25 @@
-import typer
 import asyncio
 
-from ..client import CommitClient
-from ..utils import _parse_owner_repo, load_config
+import typer
+
+from ..client import Client
+from ..display import DisplayManager
 from ..models import Commit
-from ..display import display_commits
+from ..utils import _parse_owner_repo, load_config
 
 app = typer.Typer()
 
+
 async def _run(owner: str, repo: str, show_all: bool):
-    c = CommitClient()
+    c = Client()
+    d = DisplayManager()
+
     rep = await c.get_commit(owner, repo)
-    commits: list[Commit] = [Commit.model_validate(commit_json) for commit_json in rep.json()]
-    display_commits(commits, show_all)
+    commits: list[Commit] = [
+        Commit.model_validate(commit_json) for commit_json in rep.json()
+    ]
+    d.display_commits(commits, show_all)
+
 
 @app.callback(invoke_without_command=True)
 def main(
@@ -22,7 +29,7 @@ def main(
     ),
     show_all: bool = typer.Option(
         False, "-a", "--all", help="Show all the commits for this repository."
-    )
+    ),
 ) -> None:
     if ctx.invoked_subcommand is None:
         owner, repo = _parse_owner_repo(owner_repo, load_config())
