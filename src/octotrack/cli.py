@@ -1,4 +1,7 @@
+from importlib.metadata import version
+
 import typer
+from rich.console import Console, Text
 
 from .commands import branch_app, commit_app, config_app, repo_app, setup_app, tag_app
 
@@ -15,3 +18,21 @@ app.add_typer(config_app, name="config", help="Run config commands")
 app.add_typer(repo_app, name="repo", help="Run repository related commands")
 app.add_typer(setup_app, name="setup")
 app.add_typer(tag_app, name="tags", help="View the latest tags for a repository")
+
+
+def get_version() -> str:
+    return version("octotrack")
+
+
+@app.callback(invoke_without_command=True)
+def main(
+    ctx: typer.Context,
+    version: bool = typer.Option(
+        None, "--version", "-v", help="Display your current OctoTrack version"
+    )
+) -> None:
+    if ctx.invoked_subcommand is None:
+        if version:
+            Console().print(Text(f"OctoTrack {get_version()}", style="italic bold cyan"))
+        else:
+            print(ctx.get_help())
