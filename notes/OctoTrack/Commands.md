@@ -1,4 +1,5 @@
 > Base command: `octotrack`
+> Version command: `octotrack -v / --version`
 
 ## Setup
 
@@ -25,8 +26,8 @@ CONFIG_SETTINGS = {
 	"api_base_url": "https://api.github.com" | "https://github.mycompany.com/api/v3",
 }
 ```
+
 ## Repository
-### Repo
 
 | Command                                       | Description                                       |
 | --------------------------------------------- | ------------------------------------------------- |
@@ -35,7 +36,7 @@ CONFIG_SETTINGS = {
 | `octotrack repo contents <owner/repo> <path>` | File / directory contents at a given ref          |
 | `octotrack repo readme <owner/repo>`          | Get the repository's README.md                    |
 
-## Command Details / Layout
+### Command Details / Layout
 
 `octotrack repo contents <owner/repo> <path>`:
 - `<owner/repo>` will function like the other commands
@@ -49,11 +50,26 @@ Arguments Include:
 - `--depth`: Max amount of folders / files to display. Defaults to 3.
 
 ## Commits
+
 | Command                               | Description                                 |
 | ------------------------------------- | ------------------------------------------- |
 | `octotrack commits show <owner/repo>` | Show commits for the current `<owner/repo>` |
+
 Arguments Include:
 - `-a` / `--all`: Show all the commits in the repository
+
+## Branches + Tags
+
+| Command                                    | Description                                                                     |
+| ------------------------------------------ | ------------------------------------------------------------------------------- |
+| `octotrack branches <owner/repo> <branch>` | Get the branches from a repository *or* view a single branch from a repository. |
+| `octotrack tags <owner/repo>`              | Get the latest tags from a repository                                           |
+
+### Command Details / Layout
+
+`octotrack branches <owner/repo> <branch>`:
+- `<owner/repo>` will function like the other commands
+- `<branch>` will be optional, if you choose to view a branch, you can either type `-b <branch_name>` or `--branch <branch_name>`
 
 
 

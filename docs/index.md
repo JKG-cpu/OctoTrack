@@ -56,6 +56,8 @@ After the setup is complete, you can head over to [Running Your First Command](c
         
     * **Repository Commits + Commit Messages**
 
+    * **Repository Branches + Tags**
+
     ***More commands will be added soon!***
 
 ## More Info

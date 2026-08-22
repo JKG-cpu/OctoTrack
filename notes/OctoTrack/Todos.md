@@ -43,7 +43,7 @@ Also include commands that are in other CLI tools, i.e. seeing what version your
 	- [ ] Releases
 	- [ ] Issues
 	- [ ] Pull Requests
-- [ ] Add an `octotrack -v / --version` command
+- [x] Add an `octotrack -v / --version` command
 - [ ] Create an `octotrack help` section as a "file directory" for documentation on how to use OctoTrack, setting up GitHub Auth Tokens, and other things
 - [ ] [^1]Publish `v0.4.0`
 
@@ -65,10 +65,18 @@ Not all people use CLI Tools comfortably, to create a Textual TUI Interface to a
 - [x] [^3]Deploy to GitHub pages???
 - [ ] Need to add more details to documentation, including
 	- [ ] Each Command
-	- [ ] Installation
-	- [ ] Quick Start
-	- [ ] GitHub Auth Token
-- [ ] Maybe add better errors, specifically for invalid urls
+		- [x] Setup
+		- [x] Config
+		- [x] Repository
+		- [x] Commits
+		- [x] Branches & Tags
+		- [ ] Releases
+		- [ ] Issues
+		- [ ] Pull Requests
+	- [x] Installation
+	- [x] Quick Start
+	- [x] GitHub Auth Token
+- [ ] Maybe add better errors, specifically for invalid urls + timeouts
 
 [^1]: Need to update / create the things listed below
 	1. Update project `README.md`

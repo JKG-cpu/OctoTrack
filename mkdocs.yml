@@ -5,14 +5,18 @@ repo_url: https://github.com/JKG-cpu/OctoTrack
 theme:
   name: material
   palette:
-    - scheme: slate
-      toggle:
-        icon: material/brightness-4
-        name: Switch to light mode
     - scheme: default
+      primary: white
+      accent: light blue
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
+    - scheme: slate
+      primary: slate
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   features:
     - search.suggest
     - navigation.expand
@@ -25,15 +29,22 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.superfences
 
+copyright: "Copyright &copy; 2026 JKG-cpu &bull; <a href=\"https://github.com/JKG-cpu\" target=\"_blank\" rel=\"noopener\">GitHub Profile</a>"
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/JKG-cpu/OctoTrack
+      name: OctoTrack Source Code
+
 nav:
   - Home: index.md
   - Quick Start: quickstart.md
   - GitHub Auth Token: authtoken.md
   - OctoTrack Setup: setup.md
   - Commands:
-    - Running Your First Command: commands/first_command.md
-  # - Commands:
-  #   - Setup: commands/setup.md
-  #   - Config: commands/config.md
-  #   - Repository: commands/repo.md
-  #   - Commits: commands/commits.md
+    - Branches & Tags: commands/branches_tags.md
+    - Commits: commands/commits.md
+    - Config: commands/config.md
+    - Repository: commands/repo.md
+    - Setup: commands/setup.md

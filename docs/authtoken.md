@@ -2,7 +2,7 @@
 
 You'll need a GitHub personal access token to use OctoTrack — here's a quick rundown of how to get one.
 
-!!! note
+!!! warning "Don't Forget!"
     Before setting up an auth token, you must first setup the necessary files for OctoTrack to run. Just type in `octotrack setup` and you will be good to go!
 
 1. Go to [GitHub's token settings page](https://github.com/settings/personal-access-tokens) and click 'Generate new token'.
@@ -11,7 +11,7 @@ You'll need a GitHub personal access token to use OctoTrack — here's a quick r
 4. Copy the generated token — ***GITHUB ONLY SHOWS THIS ONCE***
 5. Run `octotrack config set-token` and paste it in when prompted.
 
-!!! note
+!!! note 
     OctoTrack does NOT save your GitHub Auth Token publicly.
     It is kept in a .env file in your App Data.
 
