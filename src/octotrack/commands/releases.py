@@ -5,7 +5,7 @@ import typer
 from ..client import Client
 from ..display import DisplayManager
 from ..models import Releases
-from ..utils import _parse_owner_repo, load_config
+from ..utils import Text, _parse_owner_repo, load_config
 
 __all__ = ["app"]
 
@@ -17,8 +17,9 @@ async def get_releases(owner: str, repo: str) -> None:
     c = Client()
     d = DisplayManager()
 
-    response = await c.get_releases(owner, repo)
-    releases = [Releases.model_validate(json) for json in response.json()]
+    with Text.status("Looking for releases...", style="bold white"):
+        response = await c.get_releases(owner, repo)
+        releases = [Releases.model_validate(json) for json in response.json()]
 
     d.display_releases(releases)
 
@@ -32,5 +33,4 @@ def main(
 ) -> None:
     if ctx.invoked_subcommand is None:
         owner, repo = _parse_owner_repo(owner_repo, load_config())
-
         asyncio.run(get_releases(owner, repo))

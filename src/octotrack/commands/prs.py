@@ -6,7 +6,7 @@ import typer
 from ..client import Client
 from ..display import DisplayManager
 from ..models import PRs
-from ..utils import _parse_owner_repo, load_config
+from ..utils import Text, _parse_owner_repo, load_config
 
 __all__ = ["app"]
 
@@ -18,10 +18,11 @@ async def get_prs(owner: str, repo: str, state: Literal["all", "closed", "open"]
     c = Client()
     d = DisplayManager()
 
-    raw_prs = await c.get_prs(owner, repo, state)
-    prs = [
-        PRs.model_validate(json) for json in raw_prs
-    ]
+    with Text.status("Finding pull requests...", style="bold white"):
+        raw_prs = await c.get_prs(owner, repo, state)
+        prs = [
+            PRs.model_validate(json) for json in raw_prs
+        ]
 
     d.display_prs(prs, state)
 

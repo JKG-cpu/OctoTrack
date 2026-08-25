@@ -5,7 +5,7 @@ import typer
 from ..client import Client
 from ..display import DisplayManager
 from ..models import Branch, SimpleBranch
-from ..utils import _parse_owner_repo, load_config
+from ..utils import Text, _parse_owner_repo, load_config
 
 __all__ = ["app"]
 
@@ -17,15 +17,16 @@ async def get_branches(owner: str, repo: str) -> None:
     c = Client()
     d = DisplayManager()
 
-    response = await c.get_branches(owner, repo)
-    branches: list[SimpleBranch] = []
+    with Text.status("Grabbing this repository's branches...", style="bold white"):
+        response = await c.get_branches(owner, repo)
+        branches: list[SimpleBranch] = []
 
-    for json in response.json():
-        branch = SimpleBranch.model_validate(json)
-        full_branch = await c.get_branch(owner, repo, branch.name)
-        b = Branch.model_validate(full_branch.json())
-        branch.commit_message = b.commit.commit.message
-        branches.append(branch)
+        for json in response.json():
+            branch = SimpleBranch.model_validate(json)
+            full_branch = await c.get_branch(owner, repo, branch.name)
+            b = Branch.model_validate(full_branch.json())
+            branch.commit_message = b.commit.commit.message
+            branches.append(branch)
 
     d.display_branches(branches)
 
@@ -34,7 +35,9 @@ async def get_branch(owner: str, repo: str, branch: str) -> None:
     c = Client()
     d = DisplayManager()
 
-    response = await c.get_branch(owner, repo, branch)
+    with Text.status("Grabbing this repository's branches...", style="bold white"):
+        response = await c.get_branch(owner, repo, branch)
+        
     d.display_branch(Branch.model_validate(response.json()))
 
 

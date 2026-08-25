@@ -5,7 +5,7 @@ import typer
 from ..client import Client
 from ..display import DisplayManager
 from ..models import Commit
-from ..utils import _parse_owner_repo, load_config
+from ..utils import Text, _parse_owner_repo, load_config
 
 app = typer.Typer()
 
@@ -32,5 +32,6 @@ def main(
     ),
 ) -> None:
     if ctx.invoked_subcommand is None:
-        owner, repo = _parse_owner_repo(owner_repo, load_config())
-        asyncio.run(_run(owner, repo, show_all))
+        with Text.status("Grabbing commits...", style="bold white"):
+            owner, repo = _parse_owner_repo(owner_repo, load_config())
+            asyncio.run(_run(owner, repo, show_all))

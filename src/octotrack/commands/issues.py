@@ -6,7 +6,7 @@ import typer
 from ..client import Client
 from ..display import DisplayManager
 from ..models import Issues
-from ..utils import _parse_owner_repo, load_config
+from ..utils import Text, _parse_owner_repo, load_config
 
 __all__ = ["app"]
 
@@ -20,10 +20,11 @@ async def get_issues(
     c = Client()
     d = DisplayManager()
 
-    raw_issues = await c.get_issues(owner, repo, state)
-    issues = [
-        Issues.model_validate(json) for json in raw_issues if "pull_request" not in json
-    ]
+    with Text.status("Finding issues...", style="bold white"):
+        raw_issues = await c.get_issues(owner, repo, state)
+        issues = [
+            Issues.model_validate(json) for json in raw_issues if "pull_request" not in json
+        ]
 
     d.display_issues(issues, state)
 

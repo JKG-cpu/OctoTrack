@@ -31,20 +31,19 @@ Have octotrack do basic things like setting up data + config and getting things 
 ##### ***After Introduction to `httpx`, start grabbing common things from GitHub Repositories***
 Also include commands that are in other CLI tools, i.e. seeing what version your current tool is + add a help section, maybe with links to documentation???
 
-- [ ] Start creating commands (structure) and models for 
+- [x] Start creating commands (structure) and models for 
 	- [x] Branches 
 	- [x] Tags
 	- [x] Releases
 	- [x] Issues
-	- [ ] Pull Requests
-- [ ] Display models for
+	- [x] Pull Requests
+- [x] Display models for
 	- [x] Branches 
 	- [x] Tags
 	- [x] Releases
 	- [x] Issues
-	- [ ] Pull Requests
+	- [x] Pull Requests
 - [x] Add an `octotrack -v / --version` command
-- [ ] Create an `octotrack help` section as a "file directory" for documentation on how to use OctoTrack, setting up GitHub Auth Tokens, and other things
 - [ ] [^1]Publish `v0.4.0`
 
 ## `v0.5.0`

@@ -46,7 +46,7 @@ class Client:
         }
 
     # Base Get Method
-    async def _get(self, path: str, params) -> httpx.Response:
+    async def _get(self, path: str, params: dict | None = None) -> httpx.Response:
         response = await self.client.get(path, params=params)
 
         self.rate_remaining = int(response.headers.get("x-ratelimit-remaining", 0))
