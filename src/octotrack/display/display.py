@@ -16,6 +16,7 @@ from ..models import (
     Branch,
     Commit,
     Issues,
+    PRs,
     Releases,
     RepositoryContent,
     RepositoryInfo,
@@ -279,6 +280,29 @@ class DisplayManager:
 
     # endregion
 
+    # Prs
+    # region
+    def generate_pr_page(self, pr: PRs, state: str) -> Panel:
+        group = Group(
+            Text(f"Pull Request Title: {pr.title}", style="repo.title"),
+            Text.from_markup(
+                f"[link={pr.user.html_url}]{pr.user.login}[/link]",
+                style="repo.title"
+            ),
+            Rule(),
+            Text(f"State: {pr.state}\nPull Request Number: {pr.number}"),
+            f"Updated at: {self._format_date(pr.updated_at)}",
+            Text(
+                "Press A / D to scroll\nPress C to exit",
+                style="text.keybind",
+                justify="right",
+            )
+        )
+
+        return Panel(group, border_style="repo.owner", padding=(0, 2))
+
+    #endregion
+
     # Callables
     # Commits
     # region
@@ -420,11 +444,19 @@ class DisplayManager:
 
             key = readkey()
 
-            if key.title() == "A" and page_index != 0:
-                page_index -= 1
+            if key.title() == "A":
+                if page_index == 0:
+                    page_index = len(releases) - 1
 
-            elif key.title() == "D" and page_index != len(releases) - 1:
-                page_index += 1
+                else:
+                    page_index -= 1
+
+            elif key.title() == "D":
+                if page_index == len(releases) - 1:
+                    page_index = 0
+
+                else:
+                    page_index += 1
 
             elif key.title() == "C":
                 rendering = False
@@ -473,6 +505,47 @@ class DisplayManager:
                 rendering = False
 
     # endregion
+
+    # PRs
+    # region
+    def display_prs(self, prs: list[PRs], state: str) -> None:
+        if not prs:
+            self.console.print(
+                "No Pull Requests!" if state == "all" else f"No Pull Requests that are {state}!"
+            )
+            return
+
+        page_index = 0
+        rendering = True
+
+        pages = [self.generate_pr_page(pr, state) for pr in prs]
+
+        while rendering:
+            cc()
+            page = pages[page_index]
+
+            self.console.print(page)
+
+            key = readkey()
+
+            if key.title() == "A":
+                if page_index == 0:
+                    page_index = len(prs) - 1
+
+                else:
+                    page_index -= 1
+
+            elif key.title() == "D":
+                if page_index == len(prs) - 1:
+                    page_index = 0
+
+                else:
+                    page_index += 1
+
+            elif key.title() == "C":
+                rendering = False
+
+    #endregion
 
 
 class RepoInfoRenderer:

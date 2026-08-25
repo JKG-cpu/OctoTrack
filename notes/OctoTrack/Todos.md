@@ -35,13 +35,13 @@ Also include commands that are in other CLI tools, i.e. seeing what version your
 	- [x] Branches 
 	- [x] Tags
 	- [x] Releases
-	- [ ] Issues
+	- [x] Issues
 	- [ ] Pull Requests
 - [ ] Display models for
 	- [x] Branches 
 	- [x] Tags
 	- [x] Releases
-	- [ ] Issues
+	- [x] Issues
 	- [ ] Pull Requests
 - [x] Add an `octotrack -v / --version` command
 - [ ] Create an `octotrack help` section as a "file directory" for documentation on how to use OctoTrack, setting up GitHub Auth Tokens, and other things

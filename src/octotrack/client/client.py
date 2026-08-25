@@ -229,3 +229,36 @@ class Client:
         return response
 
     # endregion
+
+    # PRs
+    # region
+    async def get_prs(self, owner: str, repo: str, state: str) -> list[dict]:
+        response = await self._get(
+            f"repos/{owner}/{repo}/pulls",
+            {"per_page": 100, "state": state}
+        )
+
+        results = response.json()
+
+        last_link = response.links.get("last")
+        if not last_link:
+            return results
+
+        last_page = int(parse_qs(urlparse(last_link["url"]).query()["page"][0]))
+
+        tasks = [
+            self._get(
+                f"repos/{owner}/{repo}/pulls",
+                {"per_page": 100, "state": state, "page": page},
+            )
+            for page in range(2, last_page + 1)
+        ]
+
+        responses = await asyncio.gather(*tasks)
+
+        for r in responses:
+            results.extend(r.json())
+
+        return response
+
+    #endregion
