@@ -44,7 +44,7 @@ Also include commands that are in other CLI tools, i.e. seeing what version your
 	- [x] Issues
 	- [x] Pull Requests
 - [x] Add an `octotrack -v / --version` command
-- [ ] [^1]Publish `v0.4.0`
+- [x] [^1]Publish `v0.4.0`
 
 ## `v0.5.0`
 ##### ***Better Displays!!!***

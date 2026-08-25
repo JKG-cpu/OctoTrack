@@ -9,10 +9,15 @@ OctoTrack talks directly to the [GitHub REST API](https://docs.github.com/en/res
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Commands](#commands)
-  - [`setup`](#setup)
-  - [`config`](#config)
-  - [`repo`](#repo)
+  - [`branches`](#branches)
   - [`commits`](#commits)
+  - [`config`](#config)
+  - [`issues`](#issues)
+  - [`pr`](#pr)
+  - [`releases`](#releases)
+  - [`repo`](#repo)
+  - [`setup`](#setup)
+  - [`tags`](#tags)
 - [Configuration](#configuration)
 - [License](#license)
 
@@ -46,15 +51,31 @@ octotrack repo info
 
 All commands are grouped under three top-level subcommands: `setup`, `config`, and `repo`. Run `octotrack --help`, or `--help` on any subcommand, to see this reference from the CLI itself.
 
-### `setup`
+### `branches`
 
-Manages the local files OctoTrack needs to run (config directory, data directory, and env file for your token).
+Grabs all the branches for a repository.
+
+| Command                           | Description                                       |
+| --------------------------------- | ------------------------------------------------- |
+| `octotrack branches [owner/repo]` | Get on or all the branches of a commit repository |
+
+| Flag           | Description                                    |
+| -------------- | ---------------------------------------------- |
+| `-b, --branch` | Choose a branch to see (will output more text) |
+
+### `commits`
+
+Get the commits for a repository.
 
 | Command | Description |
 |---|---|
-| `octotrack setup` | Creates the config and data directories, and the settings file, if they don't already exist. Safe to run again — existing valid setups are left untouched. |
-| `octotrack setup validate` | Checks that all required paths exist and reports whether a GitHub token is set. |
-| `octotrack setup remove` | Deletes all data and config files created by OctoTrack, after a confirmation prompt. |
+| `octotrack commits [owner/repo]` | Shows the commits for the current repository |
+
+| Flag | Description |
+|---|---|
+| `-a, --all` | List every single commit |
+
+Every `commits` command that accepts `owner/repo` will fall back to your configured default (set via `octotrack repo default`) for whichever part - owner, repo, or both - you omit.
 
 ### `config`
 
@@ -68,6 +89,38 @@ Reads and writes local configuration, including your GitHub token.
 | `octotrack config clear [--key/-k <key>]` | Resets a single config key to its default. Omit `--key` to reset the entire config. |
 | `octotrack config path` | Prints the path to the config settings file. |
 | `octotrack config github-token-help` | An explanation on how to create a GitHub Authentication Token |
+
+### `issues`
+
+Get all the issues for a repository.
+
+| Command                         | Description                  |
+| ------------------------------- | ---------------------------- |
+| `octotrack issues [owner/repo]` | View Issues for a repository |
+
+| Flags     | Description                                                                              |
+| --------- | ---------------------------------------------------------------------------------------- |
+| `--state` | Define a state to use to filter issues (default: all). Options: `all`, `open`, `closed`. |
+
+### `pr`
+
+Get and view all the pull requests for a repository.
+
+| Command                     | Description                        |
+| --------------------------- | ---------------------------------- |
+| `octotrack pr [owner/repo]` | View Pull Requests for a repositry |
+
+| Flags     | Description                                                                              |
+| --------- | ---------------------------------------------------------------------------------------- |
+| `--state` | Define a state to use to filter issues (default: all). Options: `all`, `open`, `closed`. |
+
+### `releases`
+
+Get and view all the releases for a repository.
+
+| Command                           | Description                       |
+| --------------------------------- | --------------------------------- |
+| `octotrack releases [owner/repo]` | Get the releases for a repository |
 
 ### `repo`
 
@@ -91,19 +144,23 @@ Fetches and displays information about a GitHub repository.
 
 Every `repo` command that accepts `owner/repo` will fall back to your configured default (set via `octotrack repo default`) for whichever part — owner, repo, or both — you omit.
 
-### `commits`
+### `setup`
 
-Get the commits for a repository
+Manages the local files OctoTrack needs to run (config directory, data directory, and env file for your token).
 
 | Command | Description |
 |---|---|
-| `octotrack commits [owner/repo]` | Shows the commits for the current repository |
+| `octotrack setup` | Creates the config and data directories, and the settings file, if they don't already exist. Safe to run again — existing valid setups are left untouched. |
+| `octotrack setup validate` | Checks that all required paths exist and reports whether a GitHub token is set. |
+| `octotrack setup remove` | Deletes all data and config files created by OctoTrack, after a confirmation prompt. |
 
-| Flag | Description |
-|---|---|
-| `-a, --all` | List every single commit |
+### `tags`
 
-Every `commits` command that accepts `owner/repo` will fall back to your configured default (set via `octotrack repo default`) for whichever part - owner, repo, or both - you omit.
+View the newest tags for a repository.
+
+| Command                       | Description                           |
+| ----------------------------- | ------------------------------------- |
+| `octotrack tags [owner/repo]` | View the latest tags for a repository |
 
 ## Configuration
 
