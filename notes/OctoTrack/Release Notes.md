@@ -6,8 +6,10 @@ I added a bit more commands that are related to GitHub Repositories. Also added 
 
 ### Added
 - Branches + Tags Command
+- Releases Command
+- Issues Command
+- Pull Requests Command
 - An `octotrack -v` command
-- Added an `octotrack help` directory
 
 ### Removed
 - `octotrack config github-token-help`
