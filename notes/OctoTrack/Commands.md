@@ -72,6 +72,15 @@ Arguments Include:
 - `<branch>` will be optional, if you choose to view a branch, you can either type `-b <branch_name>` or `--branch <branch_name>`
 
 
+## Releases
+
+| Command                           | Description                                                                |
+| --------------------------------- | -------------------------------------------------------------------------- |
+| `octotrack releases <owner/repo>` | Gets the releases for the current repository (only 5 most recent releases) |
+
+### Command Details / Layout
+Arguments:
+- pass `-all` to view all releases
 
 [^1]: General Repository Info includes
 	-  Description

@@ -1,3 +1,5 @@
+from os import name, system
+
 import typer
 from rich.console import Console
 from rich.progress import Progress
@@ -12,6 +14,7 @@ __all__ = [
     "Text",
     "_console",
     "_parse_owner_repo",
+    "cc"
 ]
 
 
@@ -87,3 +90,7 @@ def _parse_owner_repo(value: str | None, config: dict) -> tuple[str, str]:
         raise typer.Exit(1)
 
     return owner, repo
+
+
+def cc():
+    system("cls" if name == "nt" else "clear")

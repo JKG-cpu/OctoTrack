@@ -34,13 +34,13 @@ Also include commands that are in other CLI tools, i.e. seeing what version your
 - [ ] Start creating commands (structure) and models for 
 	- [x] Branches 
 	- [x] Tags
-	- [ ] Releases
+	- [x] Releases
 	- [ ] Issues
 	- [ ] Pull Requests
 - [ ] Display models for
 	- [x] Branches 
 	- [x] Tags
-	- [ ] Releases
+	- [x] Releases
 	- [ ] Issues
 	- [ ] Pull Requests
 - [x] Add an `octotrack -v / --version` command

@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+from readchar import readkey
 from rich import box
 from rich.console import Group
 from rich.markdown import Markdown
@@ -13,13 +14,14 @@ from rich.tree import Tree
 from ..models import (
     Branch,
     Commit,
+    Releases,
     RepositoryContent,
     RepositoryInfo,
     RepositoryReadme,
     SimpleBranch,
     Tag,
 )
-from ..utils import _console
+from ..utils import _console, cc
 
 __all__ = ["DisplayManager", "RepoInfoRenderer"]
 
@@ -203,6 +205,23 @@ class DisplayManager:
 
     # endregion
 
+    # Releases
+    # region
+    def generate_release_page(self, release_data: Releases) -> None:
+        group = Group(
+            Text(f"Title: {release_data.name}", style="repo.title"),
+            Text(f"Tag: {release_data.tag_name}"),
+            Rule(),
+            Markdown(release_data.body, justify="left"),
+            Rule(),
+            Text.from_markup(f"[link={release_data.html_url.strip("\"")}]Visit Release Page[/link]"),
+            Text("Press A / D to scroll\nPress C to exit", style="text.keybind", justify="right")
+        )
+
+        return Panel(group, padding=(0, 2), border_style="repo.owner")
+
+    # endregion
+
     # Callables
     # Commits
     # region
@@ -324,6 +343,32 @@ class DisplayManager:
 
     # endregion
 
+    # Releases
+    # region
+    def display_releases(self, releases: list[Releases]) -> None:
+        page_index = 0
+        rendering = True
+
+        pages = [self.generate_release_page(page) for page in releases]
+
+        while rendering:
+            cc()
+            page = pages[page_index]
+
+            self.console.print(page)
+
+            key = readkey()
+
+            if key.title() == "A" and page_index != 0:
+                page_index -= 1
+            
+            elif key.title() == "D" and page_index != len(releases) - 1:
+                page_index += 1
+            
+            elif key.title() == "C":
+                rendering = False
+
+    # endregion
 
 class RepoInfoRenderer:
     def __init__(self, repo_info: RepositoryInfo) -> None:

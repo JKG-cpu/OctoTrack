@@ -3,7 +3,15 @@ from importlib.metadata import version
 import typer
 from rich.console import Console, Text
 
-from .commands import branch_app, commit_app, config_app, repo_app, setup_app, tag_app
+from .commands import (
+    branch_app,
+    commit_app,
+    config_app,
+    release_app,
+    repo_app,
+    setup_app,
+    tag_app,
+)
 
 __all__ = ["app"]
 
@@ -15,6 +23,7 @@ app.add_typer(
 )
 app.add_typer(commit_app, name="commits", help="Get the commits for a repository")
 app.add_typer(config_app, name="config", help="Run config commands")
+app.add_typer(release_app, name="releases", help="Get the releases for a repository")
 app.add_typer(repo_app, name="repo", help="Run repository related commands")
 app.add_typer(setup_app, name="setup")
 app.add_typer(tag_app, name="tags", help="View the latest tags for a repository")

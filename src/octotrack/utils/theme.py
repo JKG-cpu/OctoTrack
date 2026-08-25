@@ -16,6 +16,7 @@ OCTOTRACK_THEME = Theme(
         "status.info": "bold cyan",
         "text.base_text": "bold white",
         "text.header": "bold cyan",
+        "text.keybind": "bold italic cyan",
         "label": "dim",
         "value": "default",
         "muted": "dim italic",

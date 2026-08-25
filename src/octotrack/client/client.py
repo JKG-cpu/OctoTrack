@@ -187,3 +187,12 @@ class Client:
         return response
 
     # endregion
+
+    # Releases
+    # region
+    async def get_releases(self, owner: str, repo: str) -> httpx.Response:
+        response = await self._get(f"repos/{owner}/{repo}/releases")
+
+        return response
+
+    #endregion
