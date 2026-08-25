@@ -38,10 +38,12 @@ def main(
     ctx: typer.Context,
     version: bool = typer.Option(
         None, "--version", "-v", help="Display your current OctoTrack version"
-    )
+    ),
 ) -> None:
     if ctx.invoked_subcommand is None:
         if version:
-            Console().print(Text(f"OctoTrack {get_version()}", style="italic bold cyan"))
+            Console().print(
+                Text(f"OctoTrack {get_version()}", style="italic bold cyan")
+            )
         else:
             print(ctx.get_help())

@@ -14,7 +14,7 @@ __all__ = [
     "Text",
     "_console",
     "_parse_owner_repo",
-    "cc"
+    "cc",
 ]
 
 

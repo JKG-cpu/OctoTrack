@@ -214,8 +214,14 @@ class DisplayManager:
             Rule(),
             Markdown(release_data.body, justify="left"),
             Rule(),
-            Text.from_markup(f"[link={release_data.html_url.strip("\"")}]Visit Release Page[/link]"),
-            Text("Press A / D to scroll\nPress C to exit", style="text.keybind", justify="right")
+            Text.from_markup(
+                f"[link={release_data.html_url.strip('"')}]Visit Release Page[/link]"
+            ),
+            Text(
+                "Press A / D to scroll\nPress C to exit",
+                style="text.keybind",
+                justify="right",
+            ),
         )
 
         return Panel(group, padding=(0, 2), border_style="repo.owner")
@@ -361,14 +367,15 @@ class DisplayManager:
 
             if key.title() == "A" and page_index != 0:
                 page_index -= 1
-            
+
             elif key.title() == "D" and page_index != len(releases) - 1:
                 page_index += 1
-            
+
             elif key.title() == "C":
                 rendering = False
 
     # endregion
+
 
 class RepoInfoRenderer:
     def __init__(self, repo_info: RepositoryInfo) -> None:

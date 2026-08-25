@@ -26,4 +26,3 @@ class Releases(BaseModel):
     created_at: datetime
     updated_at: datetime
     published_at: datetime
-
