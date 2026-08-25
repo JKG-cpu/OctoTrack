@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from typing import Literal
 
 from readchar import readkey
 from rich import box
@@ -14,6 +15,7 @@ from rich.tree import Tree
 from ..models import (
     Branch,
     Commit,
+    Issues,
     Releases,
     RepositoryContent,
     RepositoryInfo,
@@ -40,7 +42,7 @@ class DisplayManager:
     # Helpers
     # Commits
     # region
-    def _format_commit_date(self, dt: datetime) -> str:
+    def _format_date(self, dt: datetime) -> str:
         return dt.strftime("%Y-%m-%d %H:%M")
 
     def _commit_summary(self, message: str) -> str:
@@ -198,7 +200,7 @@ class DisplayManager:
         grid.add_row(
             Text(commiter.name),
             Text(self._commit_summary(commit_details.message)),
-            Text(self._format_commit_date(commiter.date)),
+            Text(self._format_date(commiter.date)),
         )
 
         return Group(heading, Text(), grid)
@@ -207,7 +209,7 @@ class DisplayManager:
 
     # Releases
     # region
-    def generate_release_page(self, release_data: Releases) -> None:
+    def generate_release_page(self, release_data: Releases) -> Panel:
         group = Group(
             Text(f"Title: {release_data.name}", style="repo.title"),
             Text(f"Tag: {release_data.tag_name}"),
@@ -225,6 +227,55 @@ class DisplayManager:
         )
 
         return Panel(group, padding=(0, 2), border_style="repo.owner")
+
+    # endregion
+
+    # Issues
+    # region
+    def get_issue_status_grid(self, issue: Issues) -> Table.grid:
+        grid = Table.grid(expand=False, padding=(0, 2))
+
+        grid.add_column(justify="left")
+
+        grid.add_row(f"Created at: {self._format_date(issue.created_at)}")
+        grid.add_row(f"Updated at: {self._format_date(issue.updated_at)}")
+
+        if issue.closed_at:
+            grid.add_row(f"Closed at: {self._format_date(issue.closed_at)}")
+            grid.add_row(
+                Text("Closed by: ")
+                + Text.from_markup(
+                    f"[link={issue.closed_by.html_url}]{issue.closed_by.login}[/link]"
+                )
+            )
+
+        else:
+            grid.add_row("Not closed")
+
+        return grid
+
+    def generate_issues_page(
+        self, issue: Issues, state: Literal["all", "open", "closed"]
+    ) -> Panel:
+        group = Group(
+            Text(f"Issue Title: {issue.title}", style="repo.title"),
+            Text.from_markup(
+                f"[link={issue.user.html_url}]{issue.user.login}[/link]",
+                style="repo.title",
+            ),
+            Rule(),
+            Markdown(issue.body),
+            Rule(),
+            Text(f"State: {issue.state}\nIssue Number: {issue.number}"),
+            self.get_issue_status_grid(issue),
+            Text(
+                "Press A / D to scroll\nPress C to exit",
+                style="text.keybind",
+                justify="right",
+            ),
+        )
+
+        return Panel(group, border_style="repo.owner", padding=(0, 2))
 
     # endregion
 
@@ -249,7 +300,7 @@ class DisplayManager:
             details = commit.commit
             table.add_row(
                 commit.sha[:7],
-                self._format_commit_date(details.committer.date),
+                self._format_date(details.committer.date),
                 details.committer.name,
                 self._commit_summary(details.message),
             )
@@ -352,6 +403,10 @@ class DisplayManager:
     # Releases
     # region
     def display_releases(self, releases: list[Releases]) -> None:
+        if not releases:
+            self.console.print("No Releases!")
+            return
+
         page_index = 0
         rendering = True
 
@@ -370,6 +425,49 @@ class DisplayManager:
 
             elif key.title() == "D" and page_index != len(releases) - 1:
                 page_index += 1
+
+            elif key.title() == "C":
+                rendering = False
+
+    # endregion
+
+    # Issues
+    # region
+    def display_issues(
+        self, issues: list[Issues], state: Literal["all", "open", "closed"]
+    ) -> None:
+        if not issues:
+            self.console.print(
+                "No Issues!" if state == "all" else f"No Issues that are {state}!"
+            )
+            return
+
+        page_index = 0
+        rendering = True
+
+        pages = [self.generate_issues_page(issue, state) for issue in issues]
+
+        while rendering:
+            cc()
+            page = pages[page_index]
+
+            self.console.print(page)
+
+            key = readkey()
+
+            if key.title() == "A":
+                if page_index == 0:
+                    page_index = len(issues) - 1
+
+                else:
+                    page_index -= 1
+
+            elif key.title() == "D":
+                if page_index == len(issues) - 1:
+                    page_index = 0
+
+                else:
+                    page_index += 1
 
             elif key.title() == "C":
                 rendering = False

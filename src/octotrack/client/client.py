@@ -1,5 +1,7 @@
+import asyncio
 import os
 import sys
+from urllib.parse import parse_qs, urlparse
 
 import httpx
 from pydantic import ValidationError
@@ -44,7 +46,7 @@ class Client:
         }
 
     # Base Get Method
-    async def _get(self, path: str, **params) -> httpx.Response:
+    async def _get(self, path: str, params) -> httpx.Response:
         response = await self.client.get(path, params=params)
 
         self.rate_remaining = int(response.headers.get("x-ratelimit-remaining", 0))
@@ -192,6 +194,37 @@ class Client:
     # region
     async def get_releases(self, owner: str, repo: str) -> httpx.Response:
         response = await self._get(f"repos/{owner}/{repo}/releases")
+
+        return response
+
+    # endregion
+
+    # Issues
+    # region
+    async def get_issues(self, owner: str, repo: str, state: str = "all") -> list[dict]:
+        response = await self._get(
+            f"repos/{owner}/{repo}/issues", {"per_page": 100, "state": state}
+        )
+
+        results = response.json()
+
+        last_link = response.links.get("last")
+        if not last_link:
+            return results
+
+        last_page = int(parse_qs(urlparse(last_link["url"]).query()["page"][0]))
+
+        tasks = [
+            self._get(
+                f"repos/{owner}/{repo}/issues",
+                {"per_page": 100, "state": state, "page": page},
+            )
+            for page in range(2, last_page + 1)
+        ]
+        responses = await asyncio.gather(*tasks)
+
+        for r in responses:
+            results.extend(r.json())
 
         return response
 
