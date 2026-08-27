@@ -1,8 +1,8 @@
 ![OctoTrack](docs/images/octotrack_banner.png)
 
-An async CLI client for GitHub, built to track commits, pull requests, issues, releases, and general repository activity — straight from your terminal.
+An Async API CLI Client for GitHub that can be used to track things like from GitHub Repositories like Releases, Pull Requests, Issues, and more!
 
-OctoTrack talks directly to the [GitHub REST API](https://docs.github.com/en/rest) using `httpx`, so there's no dependency on the `gh` CLI or any GitHub SDK.
+OctoTrack uses the GitHub REST API Client to get any repository information needed.
 
 ## Table of Contents
 
@@ -49,7 +49,9 @@ octotrack repo info
 
 ## Commands
 
-All commands are grouped under three top-level subcommands: `setup`, `config`, and `repo`. Run `octotrack --help`, or `--help` on any subcommand, to see this reference from the CLI itself.
+Below is a list of all the OctoTrack commands. If you ever get stuck or just found some new command, run `octotrack <command> --help` or go check the documentation on (GitHub Pages)[https://jkg-cpu.github.io/OctoTrack/].
+
+For any command that has an `owner/repo` option, if you choose not to provide one, it will fall back to whatever you set in the config. You can run `octotrack config set default_owner OWNER` and `octotrack config set default_repo REPO` to set a default.
 
 ### `branches`
 
@@ -74,8 +76,6 @@ Get the commits for a repository.
 | Flag | Description |
 |---|---|
 | `-a, --all` | List every single commit |
-
-Every `commits` command that accepts `owner/repo` will fall back to your configured default (set via `octotrack repo default`) for whichever part - owner, repo, or both - you omit.
 
 ### `config`
 
@@ -133,16 +133,12 @@ Fetches and displays information about a GitHub repository.
 | `octotrack repo readme [owner/repo]` | Fetches and renders just the repository's README. |
 | `octotrack repo contents [owner/repo] [options]` | Lists the contents of a repository. |
 
-**`repo contents` options:**
-
 | Flag | Description |
 |---|---|
 | `-p, --path <path>` | List contents of a specific folder in the repository. |
 | `-h, --hidden` | Include hidden files (dotfiles) in the listing. |
 | `-l, --list` | Print as a flat list instead of a tree. |
 | `--depth <int>` | How many levels deep to recurse into subdirectories (default: `3`). |
-
-Every `repo` command that accepts `owner/repo` will fall back to your configured default (set via `octotrack repo default`) for whichever part — owner, repo, or both — you omit.
 
 ### `setup`
 
